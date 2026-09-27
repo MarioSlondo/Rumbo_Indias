@@ -9,6 +9,8 @@
 <meta property="og:description" content="La flota de Colón cruzando el Atlántico en 3D, sincronizada con la hora de España.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2307060a'/%3E%3Ccircle cx='32' cy='32' r='22' fill='none' stroke='%23c9a86a' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%23f1dfae'/%3E%3Cpath d='M4 32h56' stroke='%23c9a86a' stroke-width='1.5'/%3E%3C/svg%3E">
 <style>html,body{margin:0;height:100%}</style>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-gh7NRJ7MEWdYUGMcXx0SUMJY93gUi2UqlztG1amlvwA=' 'sha256-vAEQsFq8FR1UIH5zW4ah/8+/RzWALc9Js1Xuu6g5/8I='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self'; worker-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'">
+<meta name="referrer" content="no-referrer">
 <title>Rumbo a las Indias</title>
 </head>
 <body>
@@ -212,9 +214,9 @@
   #aimDot{fill:rgba(201,168,106,.25);stroke:#f1dfae;stroke-width:2;}
   #aimTxt{fill:#f1dfae;font-family:Cinzel,Georgia,serif;font-size:14px;letter-spacing:.14em;paint-order:stroke;stroke:rgba(0,0,0,.75);stroke-width:3px;}
   body.kraken #card,body.navmode #card{opacity:0!important;}
-  #krBanner{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%) scale(.96);z-index:31;text-align:center;pointer-events:none;opacity:0;transition:opacity .5s,transform .5s;width:min(760px,calc(100vw - 32px));}
-  #krBanner.on{opacity:1;transform:translate(-50%,-50%);}
-  #krBanner b{display:block;font-family:var(--f-display);font-weight:400;font-size:clamp(44px,8vw,92px);line-height:1;}
+  #krBanner{position:fixed;left:50%;top:auto;bottom:calc(172px + env(safe-area-inset-bottom,0px));transform:translate(-50%,0) scale(.96);z-index:31;text-align:center;pointer-events:none;opacity:0;transition:opacity .5s,transform .5s;width:min(620px,calc(100vw - 520px));min-width:min(420px,calc(100vw - 24px));}
+  #krBanner.on{opacity:1;transform:translate(-50%,0);}
+  #krBanner b{display:block;font-family:var(--f-display);font-weight:400;font-size:clamp(34px,4.6vw,64px);line-height:1;}
   #krBanner span{display:inline-block;margin-top:10px;padding:6px 14px;font-family:var(--f-caps);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-hi);background:rgba(8,7,6,.7);}
   @media (max-width:640px){
     #krHud,#stHud,#dhHud{top:calc(6px + env(safe-area-inset-top,0px))!important;left:8px!important;transform:none!important;width:min(250px,calc(100vw - 110px))!important;padding:6px 9px 7px!important;text-align:left;}
@@ -224,10 +226,10 @@
     .krh-help,.krh-btn{display:none!important;}
   }
   body.kraken #title,body.storm #title,body.dutch #title{opacity:0;}
-  @media (max-width:640px){ body #toast{bottom:calc(var(--menuH,100px) + 132px + env(safe-area-inset-bottom,0px));font-size:9.5px;letter-spacing:.16em;} #krBanner b{font-size:34px;} #krBanner span{font-size:10px;letter-spacing:.12em;} }
+  @media (max-width:640px){ body #krBanner{top:auto;bottom:calc(var(--menuH,100px) + 104px + env(safe-area-inset-bottom,0px));transform:translate(-50%,0) scale(.96);width:calc(100vw - 24px);} body #krBanner.on{transform:translate(-50%,0);} body #toast{bottom:calc(var(--menuH,100px) + 196px + env(safe-area-inset-bottom,0px));font-size:9.5px;letter-spacing:.16em;} #krBanner b{font-size:34px;} #krBanner span{font-size:10px;letter-spacing:.12em;} }
   body.storm #helm{top:calc(172px + env(safe-area-inset-top,0px));}
   @media (max-width:640px){ #stHud{top:calc(8px + env(safe-area-inset-top,0px));padding:8px 12px;} body.storm #helm{top:calc(150px + env(safe-area-inset-top,0px));} }
-  #toast{position:fixed;left:50%;top:auto;bottom:calc(172px + env(safe-area-inset-bottom,0px));max-width:calc(100vw - 32px);text-align:center;transform:translateX(-50%);font-family:var(--f-caps);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-hi);opacity:0;transition:opacity .3s;pointer-events:none;z-index:40;text-shadow:0 1px 8px #000;}
+  #toast{position:fixed;left:50%;top:auto;bottom:calc(300px + env(safe-area-inset-bottom,0px));max-width:calc(100vw - 32px);text-align:center;transform:translateX(-50%);font-family:var(--f-caps);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-hi);opacity:0;transition:opacity .3s;pointer-events:none;z-index:40;text-shadow:0 1px 8px #000;}
   #toast.on{opacity:1;}
 
   /* Carga: anillo dorado */
@@ -330,7 +332,6 @@
   <button id="bSea" aria-pressed="true">Mar</button>
   <label class="vol"><span>Volumen</span><input id="vol" type="range" min="0" max="100" value="80" aria-label="Volumen general"></label>
   <button id="bPause" class="minor" aria-pressed="false">Pausa</button>
-  <button id="bClock" class="minor" aria-pressed="false">Acelerar día</button>
 </nav>
 </div>
 
@@ -2572,7 +2573,7 @@ function setZen(on, silent) {
 let idleT = 0; function bumpIdle() { document.body.classList.remove('idle'); clearTimeout(idleT); idleT = setTimeout(() => document.body.classList.add('idle'), 3500); }
 addEventListener('pointermove', bumpIdle);
 renderer.domElement.addEventListener('dblclick', () => { if (document.body.classList.contains('zen')) setZen(false); });
-$('bClock').addEventListener('click', () => {
+$('bClock')?.addEventListener('click', () => {
   if (!CLOCK.fast) { CLOCK.simMs0 = Date.now(); CLOCK.fastT0 = performance.now(); }
   CLOCK.fast = !CLOCK.fast; $('bClock').setAttribute('aria-pressed', String(CLOCK.fast));
   $('bClock').textContent = CLOCK.fast ? 'Tiempo real' : (innerWidth < 640 ? 'Acelerar' : 'Acelerar día');
@@ -2862,7 +2863,7 @@ async function showLog(step) {
 $('logPrev').addEventListener('click', () => showLog(-1)); $('logNext').addEventListener('click', () => showLog(1)); $('logToday').addEventListener('click', () => showLog());
 
 function pickShip(k) { if (ships[k].sunk) { toast(`${CARD[k][1]} está hundida`); return; } setFocus(k); }
-if (innerWidth < 640) { $('bClock').textContent = 'Acelerar'; }
+
 paintModes(); paintHelm();
 
 /* =====================================================================
@@ -3773,7 +3774,7 @@ function frame() {
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
-window.__lab = { DUTCH, startDutch, endDutch, hurtDutch, DYN, renderer, strike, getBolt: () => bolt, STORM, startStorm, endStorm, updateShips, openSheet, voyageNow, routeAt, HELM, setMode, pickShip, placeCam: (p, t) => { tween = null; camera.position.copy(p); controls.target.copy(t); controls.update(); }, P, KR, ATK, hurtKraken, sinkShip, updateBalls, updateKraken, startKraken, setAttack, volley, aimPoint, drawAim, CLOCK, updateDayCycle, setFocus, goView, applyAll, setZen, VIEWS, ships, rebuildRigs };
+const __labInternal = { DUTCH, startDutch, endDutch, hurtDutch, DYN, renderer, strike, getBolt: () => bolt, STORM, startStorm, endStorm, updateShips, openSheet, voyageNow, routeAt, HELM, setMode, pickShip, placeCam: (p, t) => { tween = null; camera.position.copy(p); controls.target.copy(t); controls.update(); }, P, KR, ATK, hurtKraken, sinkShip, updateBalls, updateKraken, startKraken, setAttack, volley, aimPoint, drawAim, CLOCK, updateDayCycle, setFocus, goView, applyAll, setZen, VIEWS, ships, rebuildRigs };
 
 </script>
 </body>
