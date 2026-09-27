@@ -55,7 +55,7 @@
   #title p{margin:8px 0 0;font-family:var(--f-caps);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold-hi);text-shadow:0 1px 3px #000,0 0 10px rgba(0,0,0,.8);}
 
   /* Menú vertical de sistema (arriba a la derecha) */
-  #menus{position:fixed;right:clamp(16px,3vw,44px);top:calc(24px + env(safe-area-inset-top,0px));display:flex;flex-direction:column;gap:22px;width:190px;}
+  #menus{position:fixed;right:clamp(16px,3vw,44px);top:calc(24px + env(safe-area-inset-top,0px));display:flex;flex-direction:column;gap:16px;width:190px;}
   .menu{position:relative;display:flex;flex-direction:column;gap:12px;padding:12px 16px 14px 30px;min-width:150px;box-sizing:border-box;background:linear-gradient(90deg,rgba(8,7,5,0),rgba(8,7,5,.55) 30%);border-right:1px solid var(--gold-line);}
   .menu .mh{font-family:var(--f-caps);font-weight:400;font-size:9.5px;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);padding-bottom:6px;border-bottom:1px solid var(--gold-line);margin-bottom:2px;text-shadow:0 1px 3px #000;}
   .menu button{position:relative;background:none;border:0;padding:2px 0;cursor:pointer;text-align:left;font-family:var(--f-caps);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#d9c9a4;text-shadow:0 1px 3px #000,0 0 10px rgba(0,0,0,.8);transition:color .25s;}
@@ -127,7 +127,7 @@
   body.zen #menus,body.zen #title,body.zen #ships,body.zen #card,body.zen #veil{opacity:0;pointer-events:none!important;}
   body.zen #ships .track{pointer-events:none;}
   body.attack #ships,body.attack #title{opacity:0;pointer-events:none;} body.attack #ships .track{pointer-events:none;}
-  body.attack #krHud{left:clamp(16px,3vw,44px);transform:none;width:min(340px,calc(100vw - 32px));} body.attack .krh-help,body.attack .krh-btn{display:none;}
+  body.attack #krHud,body.attack #dhHud{left:clamp(16px,3vw,44px);transform:none;width:min(340px,calc(100vw - 32px));} body.attack .krh-help,body.attack .krh-btn{display:none;}
   #menus,#title,#ships,#card,#veil{transition:opacity .5s ease;}
   #zenHint{position:fixed;right:clamp(16px,3vw,40px);bottom:calc(20px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;
     padding:10px 16px 10px 12px;border:1px solid var(--gold-line);background:rgba(8,7,6,.78);cursor:pointer;
@@ -164,8 +164,9 @@
   .parch.map{width:min(1180px,100%);padding:18px;}
   .parch.map canvas{display:block;width:100%;height:auto;}
   .parch.log{width:min(720px,100%);padding:34px clamp(20px,5vw,56px) 22px;display:flex;flex-direction:column;}
-  .pclose{position:absolute;right:14px;top:10px;z-index:2;background:none;border:0;font-size:30px;line-height:1;color:#5a3f1f;cursor:pointer;}
-  .pclose:hover{color:#8b1a10;}
+  .pclose{position:absolute;right:-10px;top:-10px;z-index:3;width:40px;height:40px;border-radius:50%;background:#2a1d10;border:1px solid #c9a86a;font-size:26px;line-height:36px;text-align:center;padding:0;color:#f1dfae;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.5);}
+  @media (max-width:700px){ .pclose{right:2px;top:2px;width:44px;height:44px;line-height:40px;} }
+  .pclose:hover{background:#8b1a10;color:#fff;}
   .pfoot{margin:10px 6px 0;font-size:12.5px;font-style:italic;color:#6b5230;text-align:center;}
   .parch .lk{margin:0;font-family:var(--f-caps);font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:#7a5a2e;text-align:center;}
   .parch h2{margin:6px 0 10px;font-family:var(--f-display);font-weight:400;font-size:clamp(24px,4vw,34px);text-align:center;color:#3b2310;}
@@ -177,27 +178,28 @@
   .ltext p:first-child::first-letter{font-family:var(--f-display);font-size:3.1em;float:left;line-height:.9;margin:4px 8px 0 0;color:#8b1a10;}
   .ltext .note{font-style:italic;color:#6b5230;text-align:center;}
   .ltext::-webkit-scrollbar{width:6px}.ltext::-webkit-scrollbar-thumb{background:rgba(90,60,25,.4)}
-  @media (max-width:640px){ .parch.map{padding:10px;overflow:auto;} .parch.map canvas{width:960px;max-width:none;} .ltext{font-size:16px;} }
+  @media (max-width:700px){ .parch-wrap{padding:6px;} .parch.map{padding:8px;} .parch.map .pfoot{font-size:11px;margin-top:6px;} .ltext{font-size:16px;} }
 
   /* Batalla contra el kraken */
-  #krHud,#stHud{position:fixed;left:50%;top:calc(18px + env(safe-area-inset-top,0px));transform:translateX(-50%);width:min(420px,calc(100vw - 32px));z-index:30;text-align:center;
+  #krHud,#stHud,#dhHud{position:fixed;left:50%;top:calc(18px + env(safe-area-inset-top,0px));transform:translateX(-50%);width:min(420px,calc(100vw - 32px));z-index:30;text-align:center;
     padding:12px 18px 12px;background:linear-gradient(180deg,rgba(8,7,6,.86),rgba(8,7,6,.62));border:1px solid var(--gold-faint);box-shadow:0 0 0 4px rgba(0,0,0,.3);}
-  #stHud{width:min(380px,calc(100vw - 32px));} #stHud .krh-fleet{margin-top:10px;}
-  #krHud::before,#stHud::before{content:"";position:absolute;inset:5px;border:1px solid rgba(201,168,106,.1);pointer-events:none;}
+  #krHud,#stHud,#dhHud{width:min(320px,calc(100vw - 32px))!important;padding:8px 12px 9px!important;} #stHud .krh-fleet{margin-top:8px;}
+  #dhHud .krh-t{font-size:17px;}
+  #krHud::before,#stHud::before,#dhHud::before{content:"";position:absolute;inset:5px;border:1px solid rgba(201,168,106,.1);pointer-events:none;}
   .krh-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
-  .krh-t{font-family:var(--f-display);font-weight:400;font-size:26px;}
+  .krh-t{font-family:var(--f-display);font-weight:400;font-size:19px;}
   .krh-time{font-family:var(--f-caps);font-size:13px;letter-spacing:.2em;color:var(--gold-hi);font-variant-numeric:tabular-nums;}
-  .krh-boss{display:flex;align-items:center;gap:10px;margin:10px 0 12px;}
+  .krh-boss{display:flex;align-items:center;gap:8px;margin:6px 0 8px;}
   .krh-boss .bar{flex:1;height:9px;background:rgba(120,30,20,.25);border:1px solid rgba(201,168,106,.35);}
   .krh-boss i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#5e1510,#b3261e 60%,#e0603a);box-shadow:0 0 10px rgba(179,38,30,.6);transition:width .35s;}
-  .krh-boss b{font-family:var(--f-display);font-weight:400;font-size:20px;color:var(--gold-hi);min-width:2.2ch;text-align:right;font-variant-numeric:tabular-nums;}
+  .krh-boss b{font-family:var(--f-display);font-weight:400;font-size:16px;color:var(--gold-hi);min-width:2.2ch;text-align:right;font-variant-numeric:tabular-nums;}
   .krh-fleet{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
   .krh-ship{font-family:var(--f-caps);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);text-align:left;transition:opacity .4s;}
   .krh-ship .bar{height:4px;margin-top:4px;background:rgba(201,168,106,.14);}
   .krh-ship i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#6a8f4a,#d9c06a);transition:width .4s;}
   .krh-ship.tgt span{color:#f0a07a;} .krh-ship.tgt span::after{content:" ◂";}
   .krh-ship.sunk{opacity:.35;} .krh-ship.sunk span{text-decoration:line-through;}
-  .krh-help{margin-top:8px;font-style:italic;font-size:14px;color:var(--muted);}
+  .krh-help{margin-top:6px;font-style:italic;font-size:12px;color:var(--muted);}
   .krh-dist{font-family:var(--f-caps);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#e0a07a;}
   .krh-btn{margin-top:10px;background:none;border:1px solid var(--gold-line);color:var(--gold-hi);padding:7px 14px;cursor:pointer;font-family:var(--f-caps);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;}
   .krh-btn[aria-pressed="true"]{background:rgba(201,168,106,.18);border-color:var(--gold);box-shadow:0 0 14px rgba(201,168,106,.3);}
@@ -213,8 +215,14 @@
   #krBanner.on{opacity:1;transform:translate(-50%,-50%);}
   #krBanner b{display:block;font-family:var(--f-display);font-weight:400;font-size:clamp(44px,8vw,92px);line-height:1;}
   #krBanner span{display:inline-block;margin-top:10px;padding:6px 14px;font-family:var(--f-caps);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-hi);background:rgba(8,7,6,.7);}
-  @media (max-width:640px){ #krHud{top:calc(8px + env(safe-area-inset-top,0px));padding:8px 12px;} .krh-t{font-size:20px;} .krh-help{font-size:12.5px;} }
-  body.kraken #title,body.storm #title{opacity:0;}
+  @media (max-width:640px){
+    #krHud,#stHud,#dhHud{top:calc(6px + env(safe-area-inset-top,0px))!important;left:8px!important;transform:none!important;width:min(250px,calc(100vw - 110px))!important;padding:6px 9px 7px!important;text-align:left;}
+    #krHud::before,#stHud::before,#dhHud::before{inset:3px;}
+    .krh-t,#dhHud .krh-t{font-size:14px;} .krh-time,.krh-dist{font-size:9px;letter-spacing:.12em;} .krh-boss{margin:4px 0 5px;} .krh-boss .bar{height:6px;} .krh-boss b{font-size:13px;}
+    .krh-fleet{gap:6px;} .krh-ship{font-size:7.5px;letter-spacing:.08em;} .krh-ship .bar{height:3px;margin-top:2px;}
+    .krh-help,.krh-btn{display:none!important;}
+  }
+  body.kraken #title,body.storm #title,body.dutch #title{opacity:0;}
   body.storm #helm{top:calc(24px + env(safe-area-inset-top,0px));}
   @media (min-width:641px) and (max-width:1180px){ body.storm #helm,body.kraken #helm{top:calc(142px + env(safe-area-inset-top,0px));} }
   @media (max-width:640px){ #stHud{top:calc(8px + env(safe-area-inset-top,0px));padding:8px 12px;} body.storm #helm{top:calc(150px + env(safe-area-inset-top,0px));} }
@@ -266,7 +274,8 @@
     #title p{font-size:9.5px;letter-spacing:.22em;}
     #menus{top:auto;bottom:calc(10px + env(safe-area-inset-bottom,0px));right:8px;left:8px;width:auto;flex-direction:row;gap:6px;align-items:stretch;}
     .menu{flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:7px 8px;min-width:0;border-right:0;border-top:1px solid var(--gold-line);background:rgba(8,7,5,.6);}
-    #bar{flex:1.6;} #sound{flex:1;}
+    #bar{flex:1;} #docs{flex:1;} #sound{flex:1.5;}
+    #menus .vol{flex-basis:100%;}
     .menu .mh{display:none;} .menu .msep{display:none;}
     .menu button{font-size:9px;letter-spacing:.12em;padding-left:11px;}
     .menu button.minor{font-size:8.5px;}
@@ -307,19 +316,19 @@
   <b class="mh">Navegación</b>
   <button id="bNav" aria-pressed="true">Navegar</button>
   <button id="bAttack" aria-pressed="false">Atacar</button>
-  <i class="msep" aria-hidden="true"></i>
-  <button id="bMap" aria-pressed="false">Mapa</button>
-  <button id="bLog" aria-pressed="false">Diario de a bordo</button>
-  <i class="msep" aria-hidden="true"></i>
-  <button id="bPause" class="minor" aria-pressed="false">Pausa</button>
-  <button id="bClock" class="minor" aria-pressed="false">Acelerar día</button>
-  <button id="bNotes" class="minor" aria-pressed="false">Notas</button>
 </nav>
-<nav id="sound" class="menu" aria-label="Sonido">
-  <b class="mh">Sonido</b>
+<nav id="docs" class="menu" aria-label="Documentos de a bordo">
+  <b class="mh">Documentos de a bordo</b>
+  <button id="bMap" aria-pressed="false">Mapa</button>
+  <button id="bLog" aria-pressed="false">Diario</button>
+</nav>
+<nav id="sound" class="menu" aria-label="Ajustes">
+  <b class="mh">Ajustes</b>
   <button id="bMusic" aria-pressed="false">Música</button>
   <button id="bSea" aria-pressed="true">Mar</button>
   <label class="vol"><span>Volumen</span><input id="vol" type="range" min="0" max="100" value="80" aria-label="Volumen general"></label>
+  <button id="bPause" class="minor" aria-pressed="false">Pausa</button>
+  <button id="bClock" class="minor" aria-pressed="false">Acelerar día</button>
 </nav>
 </div>
 
@@ -389,7 +398,7 @@
     <li><span class="tag int">Fantasía</span>Cada hora en punto (hora de España o la del día acelerado) un kraken emerge a lo lejos: cabeza de calamar y ocho tentáculos. Se acerca a una nave, la golpea tres veces, se sumerge y reaparece junto a otra. Tiene una sola barra de vida: cada nave dispara tres balas por andanada; un impacto en la cabeza quita 5, en un tentáculo 2,5, y uno que cae cerca, 1. Cada nave tiene la suya; si llega a cero, se hunde. Si se hunden las tres, se pierde la batalla y la expedición se rehace poco después.</li>
     <li><span class="tag doc">Documentado</span>Las naves llevaban artillería ligera de hierro y bronce, como lombardas y falconetes. El número y la posición de las piezas que se ven aquí son interpretación.</li>
   </ul>
-  <p><button class="close" id="krSummon" style="float:none;position:static">Invocar al Kraken ahora (K)</button> <button class="close" id="stSummon" style="float:none;position:static">Invocar la tormenta ahora (T)</button></p>
+  <p><button class="close" id="krSummon" style="float:none;position:static">Invocar al Kraken ahora (K)</button> <button class="close" id="stSummon" style="float:none;position:static">Invocar la tormenta ahora (T)</button> <button class="close" id="dhSummon" style="float:none;position:static">Invocar al Holandés Errante (J)</button></p>
   <h3>Costa y luz</h3>
   <ul>
     <li><span class="tag int">Interpretación</span>Hoy se suele identificar Guanahaní con San Salvador (Bahamas), pero hay otras candidatas. La costa es genérica: isla baja, arrecife, bajíos turquesa y playa.</li>
@@ -402,7 +411,7 @@
   <h3>Rendimiento</h3>
   <p>Lo más costoso es el reflejo de los barcos en el agua (la escena se dibuja dos veces), el cielo pintado con ruido en el shader, las sombras de contacto calculadas en pantalla, la geometría de los barcos (unos 330.000 triángulos entre los tres, sobre todo jarcia y tablazón) y las sombras de 4096 px. En móvil se desactivan el reflejo y las sombras de contacto, y se reduce la resolución de cascos, cabos y velas. En móvil se reducen automáticamente la resolución, las sombras y la densidad del mar.</p>
   <h3>Teclado y gestos</h3>
-  <p>Ratón: girar, rueda: acercar, botón derecho: desplazar. Táctil: un dedo gira, dos dedos acercan. G: navegar · F: atacar · H: ocultar la interfaz (también doble clic) · En modo navegación: ←/→ o A/D timón, ↑/↓ o W/S velas, 1/2/3 elegir nave · C: carta de marear · B: diario de a bordo · Espacio: pausa · Pulsa un nodo (I, II, III) para centrar la vista en esa nave; vuelve a pulsarlo o usa Esc para ver toda la flota. N: notas · M: música · K: invocar al Kraken · T: invocar la tormenta</p>
+  <p>Ratón: girar, rueda: acercar, botón derecho: desplazar. Táctil: un dedo gira, dos dedos acercan. G: navegar · F: atacar · H: ocultar la interfaz (también doble clic) · En modo navegación: ←/→ o A/D timón, ↑/↓ o W/S velas, 1/2/3 centrar la cámara en una nave (manda siempre la primera de la columna) · C: carta de marear · B: diario de a bordo · Espacio: pausa · Pulsa un nodo (I, II, III) para centrar la vista en esa nave; vuelve a pulsarlo o usa Esc para ver toda la flota. N: notas · M: música · K: invocar al Kraken · T: invocar la tormenta · J: invocar al Holandés Errante · T: invocar la tormenta · J: invocar al Holandés Errante</p>
 </aside>
 
 
@@ -416,6 +425,16 @@
   </div>
   <div class="krh-help">Arrastra hacia atrás y suelta, como un tirachinas: las tres naves disparan a la zona marcada</div>
   <button id="krAttack" class="krh-btn" aria-pressed="false">Modo ataque · F</button>
+</section>
+<section id="dhHud" hidden aria-live="polite">
+  <div class="krh-top"><b class="krh-t gold">El Holandés Errante</b><span id="dhDist" class="krh-dist"></span><span id="dhTime" class="krh-time">0:00</span></div>
+  <div class="krh-boss"><div class="bar"><i id="dhHp"></i></div><b id="dhHpN">100</b></div>
+  <div class="krh-fleet">
+    <div class="krh-ship" id="dh_pinta"><span>La Pinta</span><div class="bar"><i></i></div></div>
+    <div class="krh-ship" id="dh_santamaria"><span>Santa María</span><div class="bar"><i></i></div></div>
+    <div class="krh-ship" id="dh_nina"><span>La Niña</span><div class="bar"><i></i></div></div>
+  </div>
+  <div class="krh-help">Rodea la flota y la cañonea: arrastra hacia atrás y suelta para responder</div>
 </section>
 <section id="stHud" hidden aria-live="polite">
   <div class="krh-top"><b class="krh-t gold">Tormenta</b><span id="stInfo" class="krh-dist"></span><span id="stTime" class="krh-time"></span></div>
@@ -504,7 +523,7 @@ const P = {
   ships: { ninaRig: 'redonda' }
 };
 const isMobile = matchMedia('(pointer:coarse)').matches || Math.min(innerWidth, innerHeight) < 600;
-const Q = isMobile ? { pr: 1.25, shadow: 1024, water: 170, msaa: 0, bloom: 0.8, refl: false, hullNS: 70, rad: 4, sail: 16 } : { pr: 2, shadow: 4096, water: 360, msaa: 4, bloom: 1, refl: true, hullNS: 150, rad: 6, sail: 30 };
+const Q = isMobile ? { pr: 1.25, shadow: 1024, water: 170, msaa: 0, bloom: 0.8, refl: false, hullNS: 70, rad: 4, sail: 16 } : { pr: 2, shadow: 2048, water: 320, msaa: 2, bloom: 1, refl: true, hullNS: 150, rad: 6, sail: 30 };
 const VEG_DENSITY = isMobile ? 0.45 : 1.0;
 
 /* =====================================================================
@@ -518,7 +537,9 @@ try {
   document.getElementById('introInner').innerHTML = '<div class="err">Este navegador no puede crear un contexto WebGL. Prueba con otro navegador o activa la aceleración por hardware.</div>';
   throw e;
 }
-renderer.setPixelRatio(Math.min(devicePixelRatio, Q.pr));
+// Resolución dinámica: empieza moderada y se ajusta sola según los fotogramas por segundo
+const DYN = { max: Math.min(devicePixelRatio, Q.pr), pr: Math.min(devicePixelRatio, Q.pr, isMobile ? 1.1 : 1.5), min: isMobile ? 0.6 : 0.75, acc: 0, n: 0, last: 0, cool: 0 };
+renderer.setPixelRatio(DYN.pr);
 renderer.setSize(innerWidth, innerHeight);
 renderer.toneMapping = THREE.NoToneMapping; // el tono se aplica en el pase final
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -533,9 +554,10 @@ const FOG = { base: 0.0004, k: 1 };
 function whirlDip(x, z) {
   if (!STORM.k || !STORM.whirls) return 0;
   let y = 0;
-  for (const w of STORM.whirls) { const st = (w.e || 0) * STORM.k; if (st < 0.001 || w.x === undefined) continue; const r = Math.hypot(x - w.x, z - w.z), q = r / w.r, h0 = 0.3 * w.r; y -= st * (7 * Math.exp(-0.9 * q * q) + 6 / (1 + (r / h0) ** 2)); }
+  for (const w of STORM.whirls) { const st = (w.e || 0) * STORM.k; if (st < 0.001 || w.x === undefined) continue; const r = Math.hypot(x - w.x, z - w.z); y -= st * (0.85 * w.r * Math.pow(1 - Math.min(r / (1.7 * w.r), 1), 2.4) + 5 / (1 + (r / (0.12 * w.r)) ** 2)); }
   return y;
 }
+const GHOST = { fk: 0 };   // niebla del Holandés Errante
 const STORM = { active: false, k: 0, t: 0, dur: 150, ending: false, whirls: [], lastKey: '', nextBolt: 0, flash: 0, envK: 0, result: '' };   // k < 1 en la vista aérea de ataque
 const camera = new THREE.PerspectiveCamera(P.cam.fov, innerWidth / innerHeight, 0.3, 9000);
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -1114,7 +1136,7 @@ const waterU = {
   uFoamTex: { value: null }, tRefl: { value: null }, uTexMat: { value: new THREE.Matrix4() }, uReflOn: { value: 0 },
   uLant: { value: Array.from({ length: 6 }, () => new THREE.Vector4()) }, uLantI: { value: 0 },
   uKr: { value: Array.from({ length: 9 }, () => new THREE.Vector4(0, 0, 1, 0)) },
-  uTrail: { value: Array.from({ length: 3 * 24 }, () => new THREE.Vector4(0, 0, 0, -1)) }, uTrailBox: { value: [new THREE.Vector4(), new THREE.Vector4(), new THREE.Vector4()] },
+  uTrail: { value: Array.from({ length: 3 * 16 }, () => new THREE.Vector4(0, 0, 0, -1)) }, uTrailBox: { value: [new THREE.Vector4(), new THREE.Vector4(), new THREE.Vector4()] },
   uWhirl: { value: Array.from({ length: 4 }, () => new THREE.Vector4(0, 0, 1, 0)) }, uStorm: { value: 0 },
   uHullT: { value: null }, uShipInv: { value: [new THREE.Matrix4(), new THREE.Matrix4(), new THREE.Matrix4()] }, uHullR: { value: [new THREE.Vector4(), new THREE.Vector4(), new THREE.Vector4()] },
   uShips: { value: [new THREE.Vector4(), new THREE.Vector4(), new THREE.Vector4()] }, uShipsB: { value: [new THREE.Vector4(), new THREE.Vector4(), new THREE.Vector4()] },
@@ -1138,11 +1160,11 @@ const waterMat = new THREE.ShaderMaterial({
       float shoal = 0.25 + 0.75 * smoothstep(0.0, 5.0, dep);
       vec3 disp = vec3(0.0); vec3 T = vec3(1.0, 0.0, 0.0), B = vec3(0.0, 0.0, 1.0);
       // los remolinos retuercen el oleaje en espiral a su alrededor
-      vec2 sp = p.xz;
-      for (int i = 0; i < 4; i++) { vec4 W = uWhirl[i]; if (W.w > 0.001 && W.z > 0.5) { vec2 d = sp - W.xy; float rn = length(d) / W.z; if (rn < 4.0) { float an = W.w * 2.2 / (0.3 + rn) * smoothstep(4.0, 1.5, rn); float c = cos(an), s = sin(an); sp = W.xy + vec2(c * d.x - s * d.y, s * d.x + c * d.y); } } }
+      vec2 sp = p.xz; float watt = 1.0;
+      for (int i = 0; i < 4; i++) { vec4 W = uWhirl[i]; if (W.w > 0.001 && W.z > 0.5) { vec2 d = sp - W.xy; float rn = length(d) / W.z; watt *= mix(1.0, smoothstep(0.35, 1.9, rn), W.w); if (rn < 4.0) { float an = W.w * 2.2 / (0.3 + rn) * smoothstep(4.0, 1.5, rn); float c = cos(an), s = sin(an); sp = W.xy + vec2(c * d.x - s * d.y, s * d.x + c * d.y); } } }
       for (int i = 0; i < 8; i++){
         vec2 D = uWA[i].xy; float k = uWA[i].z; float fr = uWB[i].y;
-        float a = uWA[i].w * (1.0 - smoothstep(0.5 * fr, fr, dist)) * shoal;
+        float a = uWA[i].w * (1.0 - smoothstep(0.5 * fr, fr, dist)) * shoal * watt;
         float f = k * dot(D, sp) - uWB[i].x * uT;
         float c = cos(f), s = sin(f), ka = k * a;
         disp += vec3(D.x * a * c, a * s, D.y * a * c);
@@ -1153,10 +1175,11 @@ const waterMat = new THREE.ShaderMaterial({
       p += disp;
       // embudo: ladera ancha y agujero central, con su pendiente en las normales
       for (int i = 0; i < 4; i++) { vec4 W = uWhirl[i]; if (W.w > 0.001 && W.z > 0.5) {
-        vec2 d = p.xz - W.xy; float r = max(length(d), 0.01), R = W.z, q = r / R, h0 = 0.3 * R;
-        float e = exp(-0.9 * q * q), g = 1.0 / (1.0 + (r / h0) * (r / h0));
-        p.y -= W.w * (7.0 * e + 6.0 * g);
-        float dh = W.w * (7.0 * e * 1.8 * q / R + 6.0 * 2.0 * r / (h0 * h0) * g * g);
+        // embudo real: pared cóncava de 0,85 radios de hondo hasta 1,7 radios, y un sumidero en el centro
+        vec2 d = p.xz - W.xy; float r = max(length(d), 0.01), R = W.z, ro = 1.7 * R, u = min(r / ro, 1.0), D = 0.85 * R, h0 = 0.12 * R;
+        float g = 1.0 / (1.0 + (r / h0) * (r / h0)), wl = pow(1.0 - u, 2.4);
+        p.y -= W.w * (D * wl + 5.0 * g);
+        float dh = W.w * (D * 2.4 * pow(1.0 - u, 1.4) / ro * step(u, 0.999) + 5.0 * 2.0 * r / (h0 * h0) * g * g);
         T.y += dh * d.x / r; B.y += dh * d.y / r;
       } }
       vJ = jxx * jzz - jxz * jxz;  // < 1: la superficie se comprime (cresta que rompe)
@@ -1165,7 +1188,7 @@ const waterMat = new THREE.ShaderMaterial({
     }`,
   fragmentShader: WATER_COMMON + SKY_GLSL + `
     uniform vec3 uDeep, uShallow, uSand, uAmbCol; uniform float uSunI, uAmb, uReflect, uFoam, uClarity, uFacets, uDetail, uAmpTot, uFogDen, uTime;
-    uniform sampler2D uNormTex, uNoiseTex, tRefl, uFoamTex; uniform vec4 uLant[6]; uniform float uLantI; uniform mat4 uTexMat; uniform float uReflOn; uniform vec4 uShips[3]; uniform vec4 uShipsB[3]; uniform vec4 uKr[9]; uniform vec4 uTrail[72]; uniform vec4 uTrailBox[3]; uniform float uStorm;
+    uniform sampler2D uNormTex, uNoiseTex, tRefl, uFoamTex; uniform vec4 uLant[6]; uniform float uLantI; uniform mat4 uTexMat; uniform float uReflOn; uniform vec4 uShips[3]; uniform vec4 uShipsB[3]; uniform vec4 uKr[9]; uniform vec4 uTrail[48]; uniform vec4 uTrailBox[3]; uniform float uStorm;
     varying vec3 vWorld; varying vec3 vN; varying float vH; varying float vDepth; varying float vJ;
     vec3 dn(vec2 uv){ vec3 t = texture2D(uNormTex, uv).rgb * 2.0 - 1.0; return vec3(t.r, t.b, t.g); }
     // Estela: bigote de proa, espuma pegada al costado, brazos de Kelvin y estela turbulenta de popa
@@ -1188,11 +1211,11 @@ const waterMat = new THREE.ShaderMaterial({
       // Estela real: sigue la polilínea del camino recorrido por cada barco (x, z, distancia desde la popa, edad)
       for (int i = 0; i < 3; i++){
         vec4 bx = uTrailBox[i];
-        if (p.x < bx.x || p.y < bx.y || p.x > bx.z || p.y > bx.w) continue;
+        if (p.x < bx.x || p.y < bx.y || p.x > bx.z || p.y > bx.w || length(p - uCam.xz) > 420.0) continue;
         float Bm = uShipsB[i].x;
         float kel = 0.0, turb = 0.0;
-        for (int k = 0; k < 23; k++){
-          vec4 A = uTrail[i * 24 + k], B = uTrail[i * 24 + k + 1];
+        for (int k = 0; k < 15; k++){
+          vec4 A = uTrail[i * 16 + k], B = uTrail[i * 16 + k + 1];
           if (B.w < 0.0) break;
           vec2 ab = B.xy - A.xy; float l2 = max(dot(ab, ab), 1e-4);
           float t = clamp(dot(p - A.xy, ab) / l2, 0.0, 1.0);
@@ -1202,8 +1225,9 @@ const waterMat = new THREE.ShaderMaterial({
           float reach = Bm * 0.55 + b * 0.34;
           if (asd > reach + 4.0 + b * 0.06) continue;
           float fade = exp(-age / 55.0) * sp;
-          kel = max(kel, exp(-pow((asd - reach) / (0.7 + b * 0.045), 2.0)) * exp(-b / 80.0) * fade);
-          turb = max(turb, exp(-pow(asd / (Bm * 0.3 + b * 0.026), 2.0)) * exp(-b / 140.0) * (0.55 + 0.45 * exp(-b / 25.0)) * fade);
+          float u1 = (asd - reach) / (0.7 + b * 0.045), u2 = asd / (Bm * 0.3 + b * 0.026);
+          kel = max(kel, exp(-u1 * u1 - b / 80.0) * fade);
+          turb = max(turb, exp(-u2 * u2 - b / 140.0) * (0.55 + 0.45 * exp(-b / 25.0)) * fade);
         }
         w += kel * 0.7 + turb * 0.55;
       }
@@ -1288,19 +1312,24 @@ const waterMat = new THREE.ShaderMaterial({
         vec4 W = uWhirl[i]; if (W.w < 0.001 || W.z < 0.5) continue;
         vec2 dd = vWorld.xz - W.xy; float rn = length(dd) / W.z; if (rn > 3.6) continue;
         float ang = atan(dd.y, dd.x), lr = log(max(rn, 0.03));
-        float spinA = uTime * 0.55 / (0.22 + rn);
-        float stk = texture2D(uNoiseTex, vec2(ang / 6.2832 * 4.0 + lr * 0.35 - spinA * 0.16, rn * 5.5)).g;
-        float stk2 = texture2D(uNoiseTex, vec2(ang / 6.2832 * 9.0 - spinA * 0.3, rn * 13.0 + 0.37)).b;
-        float arm = sin(ang * 3.0 + lr * 7.0 + spinA * 3.0) * 0.5 + 0.5;
-        float ringMask = smoothstep(3.6, 0.9, rn) * smoothstep(0.18, 0.42, rn);
-        float streaks = smoothstep(0.66, 0.9, stk * 0.6 + stk2 * 0.3 + arm * 0.22) * ringMask;
-        float rim = exp(-pow((rn - 0.36) / 0.13, 2.0)) * (0.6 + lace * 0.6);
-        wf = max(wf, (streaks * 0.7 + rim * 0.9) * W.w);
+        // todo el remolino es una espiral logarítmica que gira de una pieza (sin enrollarse con el tiempo)
+        float rot = ang - uTime * 0.5;
+        float ph = rot * 5.0 + lr * 8.5;
+        float armA = sin(ph) * 0.5 + 0.5;
+        float armB = sin(rot * 11.0 + lr * 17.0 + 1.3) * 0.5 + 0.5;
+        float nz = texture2D(uNoiseTex, vec2(ph / 6.2832 * 0.5, rn * 3.2 - uTime * 0.02)).g;
+        float nz2 = texture2D(uNoiseTex, vec2(ph / 6.2832 * 1.3 + 0.21, rn * 9.0)).b;
+        float lip = exp(-pow((rn - 1.7) / 0.35, 2.0));
+        float mask = smoothstep(3.4, 1.9, rn) * 0.5 + lip * 0.6 + smoothstep(1.6, 0.35, rn) * smoothstep(0.08, 0.25, rn) * 0.5;
+        float thr = mix(0.84, 0.66, lip);
+        float arms = smoothstep(thr, 0.97, armA * 0.62 + armB * 0.18 + nz * 0.3 + nz2 * 0.12 + lace * 0.12);
+        wf = max(wf, arms * min(mask, 1.0) * W.w);
         wc = max(wc, exp(-rn * rn * 7.0) * W.w);
         wwall = max(wwall, smoothstep(1.4, 0.3, rn) * W.w);
       }
       float fm = clamp(brk * 1.1 * (1.0 + uStorm * 0.8) + streak * (1.0 + uStorm) + wake + wf * 1.4, 0.0, 1.9) * uFoam;
       col = mix(col, uDeep * lightC * 0.4, wwall * 0.6); col *= 1.0 - 0.92 * wc;
+      col = mix(col, uDeep * 0.12, smoothstep(-2.0, -18.0, vWorld.y) * uStorm * 0.9);   // la garganta del embudo, en penumbra
       // agua aireada (turquesa lechosa) alrededor de la espuma
       col = mix(col, uShallow * lightC * 1.15 + 0.01, smoothstep(0.05, 0.7, fm) * 0.4);
       float cover = clamp(fm * (0.55 + 0.6 * fA), 0.0, 1.0);
@@ -2022,13 +2051,15 @@ let simT = 0, waveT = 0;
 /* ---- Navegación: cada nave tiene rumbo y velocidad propios ----
    Rumbo h: la proa apunta a (cos h, −sin h). El viento es de levante (sopla hacia el oeste, h = π):
    navegar con él es rápido y ceñirlo, lento. La nave al timón responde al jugador; las demás la siguen en formación. */
-const HELM = { key: 'santamaria', input: 0, rudder: 0, sail: 2, SPEEDS: [0, 2.4, 3.8] };
+const LEAD_ORDER = ['pinta', 'santamaria', 'nina'];   // de proa a popa de la columna (rumbo oeste)
+const HELM = { key: 'pinta', input: 0, rudder: 0, sail: 2, SPEEDS: [0, 2.4, 3.8] };
 const FLEET_C0 = FLEET.reduce((a, f) => a.add(f.base), V3()).multiplyScalar(1 / FLEET.length);
 for (const f of FLEET) { const s = ships[f.key]; s.pos.copy(f.base); s.hd = f.heading; s.v = HELM.SPEEDS[1]; s.rudder = 0; }
 const wrapA = a => Math.atan2(Math.sin(a), Math.cos(a));
 const windFactor = h => 0.3 + 0.7 * (0.5 + 0.5 * Math.cos(h - Math.PI));
 function steer(dt) {
-  if (ships[HELM.key].sunk) { const al = Object.keys(ships).filter(k => !ships[k].sunk); if (al.length) HELM.key = al[0]; }
+  // manda siempre la primera nave de la columna a flote (la Pinta va en cabeza); si cae, pasa a la siguiente
+  { const lead = LEAD_ORDER.find(k => !ships[k].sunk); if (lead && lead !== HELM.key) { const was = ships[HELM.key].sunk; HELM.key = lead; if (was) toast(`El mando pasa a ${CARD[lead][1]}`); if (typeof paintHelm === 'function') paintHelm(); } }
   const L = ships[HELM.key], Lf = FLEET.find(f => f.key === HELM.key);
   // nave al timón
   HELM.rudder += clamp(HELM.input - HELM.rudder, -dt * 1.8, dt * 1.8);
@@ -2074,7 +2105,7 @@ function applyFurl(s, dt) {
   for (const t of [1, 2]) if (ud.sheets[t]) ud.sheets[t].visible = s.fc[t] < 0.35;
 }
 // Estela: historial del camino real de la popa (un punto cada 6 m, 24 puntos ≈ 140 m)
-const TRAIL_N = 24, TRAIL_STEP = 6;
+const TRAIL_N = 16, TRAIL_STEP = 9;
 function updateTrail(s, i, dt, fx, fz) {
   const sx = s.pos.x - fx * s.spec.L * 0.5, sz = s.pos.z - fz * s.spec.L * 0.5;
   if (!s.trail) s.trail = [];
@@ -2260,13 +2291,13 @@ const finalMat = new THREE.ShaderMaterial({
       if (uAO > 0.5 && isGeo > 0.5 && z0 < 320.0) {
         float ao = 0.0, rad = clamp(0.55 * uFocal / z0, 2.0, 46.0);
         float rot = texture2D(tNoise, vUv * uRes / 4.0).b * 6.2832;
-        for (int i = 0; i < 12; i++) {
-          float a = float(i) * 2.39996 + rot, r = rad * sqrt((float(i) + 0.5) / 12.0);
+        for (int i = 0; i < 8; i++) {
+          float a = float(i) * 2.39996 + rot, r = rad * sqrt((float(i) + 0.5) / 8.0);
           float zs = linZ(vUv + vec2(cos(a), sin(a)) * r / uRes);
           float d = z0 - zs;
           ao += smoothstep(0.015, 0.2, d) * (1.0 - smoothstep(0.5, 1.8, d));
         }
-        ao = ao / 12.0 * (1.0 - smoothstep(140.0, 320.0, z0));
+        ao = ao / 8.0 * (1.0 - smoothstep(140.0, 320.0, z0));
         c *= 1.0 - ao * 0.6;
       }
       // perspectiva aérea tropical (el cielo queda fuera)
@@ -2288,9 +2319,9 @@ const finalMat = new THREE.ShaderMaterial({
 });
 const fsQuad = new FullScreenQuad(finalMat);
 function resize() {
-  const w = innerWidth, h = innerHeight, pr = Math.min(devicePixelRatio, Q.pr);
+  const w = innerWidth, h = innerHeight, pr = DYN.pr;
   renderer.setPixelRatio(pr); renderer.setSize(w, h);
-  rtScene.setSize(Math.round(w * pr), Math.round(h * pr)); bloom.setSize(Math.round(w * pr), Math.round(h * pr)); reflRT.setSize(Math.round(w * pr * 0.5), Math.round(h * pr * 0.5));
+  rtScene.setSize(Math.round(w * pr), Math.round(h * pr)); bloom.setSize(Math.round(w * pr * 0.5), Math.round(h * pr * 0.5)); reflRT.setSize(Math.round(w * pr * 0.35), Math.round(h * pr * 0.35));
   camera.aspect = w / h; applyCamera();
   finalMat.uniforms.uRes.value.set(w * pr, h * pr); finalMat.uniforms.uFocal.value = h * pr / (2 * Math.tan(camera.fov * Math.PI / 360)); finalMat.uniforms.uThick.value = Math.max(1, pr * 0.9);
 }
@@ -2397,8 +2428,14 @@ const SKYKEYS = [
 const _ca = new THREE.Color(), _cb = new THREE.Color();
 // cielo de tormenta: se oscurece y agrisa sin iluminar la noche
 function stormSky(k) {
-  const s = STORM.k; if (s < 0.001) return k;
+  const s = STORM.k, gk = GHOST.fk; if (s < 0.001 && gk < 0.001) return k;
   const o = { ...k }, d = k.day;
+  if (gk > 0.001) {
+    o.fog = mixHex(k.fog, mixHex('#121815', '#8e9a90', d), 0.85 * gk); o.fogD = k.fogD + 0.55 * gk; o.hor = mixHex(k.hor, mixHex('#0f1411', '#7f8b82', d), 0.75 * gk);
+    o.top = mixHex(k.top, mixHex('#090c0a', '#5f6962', d), 0.55 * gk); o.int = k.int * (1 - 0.45 * gk); o.col = mixHex(k.col, '#c4d2c8', 0.5 * gk); o.warm = k.warm * (1 - gk); o.haze = lerp(k.haze, 0.95, gk);
+    if (s < 0.001) return o;
+    k = o;
+  }
   o.col = mixHex(k.col, '#9aa4b0', 0.7 * s); o.int = k.int * (1 - 0.78 * s); o.amb = k.amb * (1 - 0.2 * s); o.ambC = mixHex(k.ambC, '#5d6873', 0.6 * s);
   o.top = mixHex(k.top, mixHex('#05070a', '#1b1f24', d), 0.9 * s); o.hor = mixHex(k.hor, mixHex('#0d1013', '#343a40', d), 0.9 * s); o.exp = k.exp * (1 - 0.12 * s);
   o.fog = mixHex(k.fog, mixHex('#0b0e11', '#353c42', d), 0.9 * s); o.fogD = k.fogD + 0.7 * s; o.haze = lerp(k.haze, 0.95, s); o.day = d * (1 - 0.7 * s); o.warm = k.warm * (1 - s);
@@ -2436,9 +2473,12 @@ function clockText() {
   const dir = COMPASS[Math.round(SUNNOW.az / 45) % 8], el = Math.round(SUNNOW.el);
   const sunTxt = SUNNOW.el > 0 ? `Sol al ${dir}, ${el}° sobre el horizonte` : SUNNOW.el > -6 ? `Crepúsculo · sol al ${dir}` : 'Noche';
   const mm = +new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Madrid', minute: '2-digit' }).format(new Date(nowMs()));
-  const krTxt = (typeof KR !== 'undefined' && KR.active) ? ' · ¡Kraken a la vista!' : ` · Kraken en ${mm === 0 ? 60 : 60 - mm} min`;
-  const stTxt = STORM.active ? ' · ¡Tormenta!' : ` · Tormenta en ${mm < 30 ? 30 - mm : 90 - mm} min`;
-  return `Hora de España ${hh} · ${sunTxt}${CLOCK.fast ? ' · día acelerado' : ''}${krTxt}${stTxt}`;
+  let ev = '';
+  if (typeof KR !== 'undefined' && KR.active) ev = ' · ¡Kraken a la vista!';
+  else if (STORM.active) ev = ' · ¡Tormenta!';
+  else if (typeof DUTCH !== 'undefined' && DUTCH.active) ev = ' · ¡El Holandés Errante!';
+  else { const nx = [['Kraken', 0], ['Tormenta', 20], ['Holandés', 40]].map(([n, m]) => [n, ((m - mm + 60) % 60) || 60]).sort((a, b) => a[1] - b[1])[0]; ev = ` · ${nx[0]} en ${nx[1]} min`; }
+  return `Hora de España ${hh} · ${sunTxt}${CLOCK.fast ? ' · día acelerado' : ''}${ev}`;
 }
 function applyAll() { applyWood(); applySails(); applySea(); applyLight(); applyAtmo(); applyCamera(); tintClouds(); updateDayCycle(true); }
 
@@ -2507,9 +2547,9 @@ function setFocus(k) {
   focusPrev.copy(c);
   tween = { p0: camera.position.clone(), t0: controls.target.clone(), p1: p, t1: c.clone(), k: 0 };
 }
-document.querySelectorAll('#ships .scroll').forEach(b => b.addEventListener('click', () => { const k = b.dataset.ship; if (focusKey === k) { setFocus(null); return; } if (!ships[k].sunk) { HELM.key = k; paintHelm(); } setFocus(k); }));
-function toggleNotes(force) { const el = $('notes'); const show = force ?? el.hidden; el.hidden = !show; $('bNotes').setAttribute('aria-pressed', String(show)); }
-$('bNotes').addEventListener('click', () => toggleNotes()); $('notesClose').addEventListener('click', () => toggleNotes(false));
+document.querySelectorAll('#ships .scroll').forEach(b => b.addEventListener('click', () => { const k = b.dataset.ship; if (focusKey === k) { setFocus(null); return; } setFocus(k); }));
+function toggleNotes(force) { const el = $('notes'); const show = force ?? el.hidden; el.hidden = !show; }
+$('notesClose').addEventListener('click', () => toggleNotes(false));
 let MODE = 'nav', prevMode = 'nav';
 function paintModes() { for (const [id, m] of [['bNav', 'nav'], ['bAttack', 'attack']]) $(id).setAttribute('aria-pressed', String(MODE === m)); document.body.classList.toggle('navmode', MODE === 'nav'); }
 function setMode(m) {
@@ -2543,15 +2583,15 @@ function musicLevel() { return 0.55 * VOL.master; } function seaLevel() { return
 function setAudio(on) {
   AUDIO.on = on; $('bMusic').setAttribute('aria-pressed', String(on));
   if (on) {
-    const inBattle = typeof KR !== 'undefined' && KR.active && KR.phase !== 'end', inStorm = STORM.active && !STORM.ending;
-    const cur = inBattle ? battleMusic : inStorm ? stormMusic : AUDIO.music, lvl = inBattle ? 0.75 * VOL.master : inStorm ? 0.8 * VOL.master : musicLevel();
+    const inBattle = typeof KR !== 'undefined' && KR.active && KR.phase !== 'end', inStorm = STORM.active && !STORM.ending, inDutch = DUTCH.active && DUTCH.phase !== 'sink';
+    const cur = inBattle ? battleMusic : inStorm ? stormMusic : inDutch ? dutchMusic : AUDIO.music, lvl = inBattle ? 0.75 * VOL.master : (inStorm || inDutch) ? 0.8 * VOL.master : musicLevel();
     Promise.all([cur.play(), AUDIO.sea.play(), inStorm ? rainAudio.play() : Promise.resolve()]).then(() => { fadeTo(cur, lvl, 3000); fadeTo(AUDIO.sea, seaLevel(), 3000); })
       .catch(() => { AUDIO.on = false; $('bMusic').setAttribute('aria-pressed', 'false'); toast('El navegador no ha permitido reproducir sonido'); });
-  } else { fadeTo(AUDIO.music, 0, 900); fadeTo(AUDIO.sea, 0, 900); if (typeof battleMusic !== 'undefined') fadeTo(battleMusic, 0, 900); fadeTo(stormMusic, 0, 900); fadeTo(rainAudio, 0, 900); }
+  } else { fadeTo(AUDIO.music, 0, 900); fadeTo(AUDIO.sea, 0, 900); if (typeof battleMusic !== 'undefined') fadeTo(battleMusic, 0, 900); fadeTo(stormMusic, 0, 900); fadeTo(rainAudio, 0, 900); fadeTo(dutchMusic, 0, 900); }
 }
 $('bMusic').addEventListener('click', () => setAudio(!AUDIO.on));
 $('bSea').addEventListener('click', () => { VOL.sea = !VOL.sea; $('bSea').setAttribute('aria-pressed', String(VOL.sea)); if (AUDIO.on) { if (VOL.sea) AUDIO.sea.play().catch(() => {}); fadeTo(AUDIO.sea, seaLevel(), 800); } });
-$('vol').addEventListener('input', e => { VOL.master = +e.target.value / 100; if (AUDIO.on) { const inB = KR.active && KR.phase !== 'end', inS = STORM.active && !STORM.ending; (inB ? battleMusic : inS ? stormMusic : AUDIO.music).volume = inB ? 0.75 * VOL.master : inS ? 0.8 * VOL.master : musicLevel(); AUDIO.sea.volume = seaLevel(); } });
+$('vol').addEventListener('input', e => { VOL.master = +e.target.value / 100; if (AUDIO.on) { const inB = KR.active && KR.phase !== 'end', inS = STORM.active && !STORM.ending, inD = DUTCH.active && DUTCH.phase !== 'sink'; (inB ? battleMusic : inS ? stormMusic : inD ? dutchMusic : AUDIO.music).volume = inB ? 0.75 * VOL.master : (inS || inD) ? 0.8 * VOL.master : musicLevel(); AUDIO.sea.volume = seaLevel(); } });
 // ---- Fecha de hoy en 1492 y días que faltan para llegar a las Indias (12 de octubre)
 const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 function voyageInfo() {
@@ -2622,10 +2662,10 @@ addEventListener('keydown', e => {
   else if (k === 'm') $('bMusic').click();
   else if (k === 'k') startKraken();
   else if (k === 't') startStorm();
+  else if (k === 'j') startDutch();
   else if (e.key === ' ') { e.preventDefault(); P.motion.paused = !P.motion.paused; updateBar(); }
   else if (k === '1') pickShip('pinta'); else if (k === '2') pickShip('santamaria'); else if (k === '3') pickShip('nina');
   else if (k === 'escape') { if (!$('mapSheet').hidden || !$('logSheet').hidden) { openSheet('mapSheet', false); openSheet('logSheet', false); } else if (document.body.classList.contains('zen')) setZen(false); else if (MODE === 'attack') setMode('nav'); else setFocus(null); }
-  else if (k === 'n') toggleNotes();
   else if (k === 'c') $('bMap').click();
   else if (k === 'b') $('bLog').click();
 });
@@ -2693,7 +2733,14 @@ const fmtDate = (y, m, d) => `${d} de ${MESES[m - 1]} de ${y}`;
 // ---- Carta de marear ----
 const MAPV = { W: -86, E: 2, S: 6, N: 50 };
 async function drawMap() {
-  const cv = $('mapCanvas'), x = cv.getContext('2d'), W = cv.width, H = cv.height;
+  // el lienzo se adapta al hueco de la pantalla: apaisado en ordenador, vertical en el móvil (sin desplazarse)
+  const mob = innerWidth < 700, pad = mob ? 8 : 18, avW = Math.min(1180, innerWidth - (mob ? 12 : 32)) - pad * 2, avH = innerHeight - (mob ? 12 : 32) - pad * 2 - (mob ? 74 : 44);
+  const asp = clamp(avW / Math.max(200, avH), 0.45, 2.2), portrait = asp < 1.25;
+  const cv = $('mapCanvas'), W = portrait ? 900 : 1400, H = Math.round(W / asp); cv.width = W; cv.height = H;
+  const x = cv.getContext('2d'), S = Math.max(1, 0.7 * W / avW);
+  { const lonW = portrait ? -89 : -86, lonE = portrait ? 3 : 2, cLat = portrait ? 28 : 28;
+    let latSpan = (lonE - lonW) * 0.883 * H / W; const stretch = clamp(latSpan / 52, 1, 1.9); latSpan /= stretch;
+    Object.assign(MAPV, { W: lonW, E: lonE, S: cLat - latSpan / 2, N: cLat + latSpan / 2 }); }
   const X = lon => (lon - MAPV.W) / (MAPV.E - MAPV.W) * W, Y = lat => (MAPV.N - lat) / (MAPV.N - MAPV.S) * H;
   let coast = null; try { coast = await fetchJSON('data/costa.json'); } catch (e) { coast = null; }
   // pergamino
@@ -2703,7 +2750,7 @@ async function drawMap() {
   for (let i = 0; i < 90; i++) { x.fillStyle = `rgba(120,80,30,${0.02 + rnd() * 0.05})`; x.beginPath(); x.arc(rnd() * W, rnd() * H, 8 + rnd() * 60, 0, 7); x.fill(); }
   for (let i = 0; i < 2600; i++) { x.fillStyle = `rgba(80,50,20,${rnd() * 0.12})`; x.fillRect(rnd() * W, rnd() * H, 1.2, 1.2); }
   // red de rumbos: rosa central y ocho satélites
-  const cx = X(-36), cy = Y(15.5), R = 380, cols = ['rgba(30,20,10,.22)', 'rgba(47,82,38,.2)', 'rgba(125,31,22,.17)'];
+  const cx = X(portrait ? -45 : -36), cy = Y(portrait ? 13 : 15.5), R = 380 * (portrait ? 0.75 : 1) * Math.min(S, 1.4), cols = ['rgba(30,20,10,.22)', 'rgba(47,82,38,.2)', 'rgba(125,31,22,.17)'];
   const hub = [[cx, cy]]; for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2; hub.push([cx + Math.cos(a) * R, cy + Math.sin(a) * R]); }
   x.lineWidth = 0.8;
   for (const [hx, hy] of hub) for (let i = 0; i < 32; i++) {
@@ -2720,49 +2767,50 @@ async function drawMap() {
   }
   // trópico y escala de latitudes
   x.setLineDash([10, 6]); x.strokeStyle = 'rgba(139,26,16,.55)'; x.lineWidth = 1.2; x.beginPath(); x.moveTo(0, Y(23.44)); x.lineTo(W, Y(23.44)); x.stroke(); x.setLineDash([]);
-  x.fillStyle = 'rgba(139,26,16,.75)'; x.font = 'italic 17px "Cormorant Garamond", Georgia, serif'; x.fillText('Trópico de Cáncer', X(-40), Y(23.44) - 6);
-  x.fillStyle = 'rgba(60,40,20,.75)'; x.fillRect(0, 0, 16, H); x.fillStyle = '#e8d8ae';
-  for (let lat = MAPV.S; lat <= MAPV.N; lat++) { const yy = Y(lat); x.fillRect(lat % 5 ? 11 : 6, yy, lat % 5 ? 5 : 10, 1); }
-  x.fillStyle = '#3b2410'; x.font = '12px Cinzel, Georgia, serif'; for (let lat = 10; lat <= 45; lat += 5) x.fillText(`${lat}°`, 20, Y(lat) + 4);
+  x.fillStyle = 'rgba(139,26,16,.75)'; x.font = `italic ${17 * S}px "Cormorant Garamond", Georgia, serif`; x.fillText('Trópico de Cáncer', X(-40), Y(23.44) - 6 * S);
+  x.fillStyle = 'rgba(60,40,20,.75)'; x.fillRect(0, 0, 16 * S, H); x.fillStyle = '#e8d8ae';
+  for (let lat = Math.ceil(MAPV.S); lat <= MAPV.N; lat++) { const yy = Y(lat); x.fillRect((lat % 5 ? 11 : 6) * S, yy, (lat % 5 ? 5 : 10) * S, S); }
+  x.fillStyle = '#3b2410'; x.font = `${12 * S}px Cinzel, Georgia, serif`; for (let lat = Math.ceil(MAPV.S / 5) * 5; lat <= MAPV.N - 2; lat += 5) x.fillText(`${lat}°`, 20 * S, Y(lat) + 4 * S);
   // rótulos
-  const label = (t, lon, lat, size = 18, style = 'italic', col = '#4a2e14', rot = 0) => { x.save(); x.translate(X(lon), Y(lat)); x.rotate(rot); x.fillStyle = col; x.font = `${style} ${size}px "Cormorant Garamond", Georgia, serif`; x.textAlign = 'center'; x.fillText(t, 0, 0); x.restore(); };
+  const label = (t, lon, lat, size = 18, style = 'italic', col = '#4a2e14', rot = 0) => { x.save(); x.translate(X(lon), Y(lat)); x.rotate(rot); x.fillStyle = col; x.font = `${style} ${size * S}px "Cormorant Garamond", Georgia, serif`; x.textAlign = 'center'; x.fillText(t, 0, 0); x.restore(); };
   label('MAR  OCÉANA', -40, 36, 40, 'italic 500', 'rgba(60,35,15,.55)');
   label('Mar de los Sargazos', -52, 32.2, 19, 'italic', 'rgba(47,82,38,.8)');
   label('Castilla', -4, 40.5, 20); label('Portugal', -8.2, 41.5, 15, 'italic', '#4a2e14', -1.2); label('Berbería', -6, 32, 18);
   label('Islas de Canaria', -17, 26.4, 15); label('Azores', -27.5, 39.6, 15); label('Guanahaní', -72.2, 24.8, 15, 'italic 600', '#8b1a10');
   label('Juana (Cuba)', -80, 23.4, 15); label('La Española', -71, 18.2, 15); label('Palos', -5.2, 36.6, 14, 'italic 600', '#8b1a10');
   // rosa decorativa
-  x.save(); x.translate(cx, cy); const ptC = (deg, len, w, cL, cD) => { const a = deg * Math.PI / 180, sn = Math.sin(a), c = -Math.cos(a), tx = sn * len, ty = c * len; for (const [sg, col] of [[1, cL], [-1, cD]]) { x.beginPath(); x.moveTo(0, 0); x.lineTo(-c * w * sg, sn * w * sg); x.lineTo(tx, ty); x.closePath(); x.fillStyle = col; x.fill(); x.strokeStyle = 'rgba(40,25,10,.6)'; x.lineWidth = 0.6; x.stroke(); } };
+  x.save(); x.translate(cx, cy); x.scale(Math.min(S, 1.5), Math.min(S, 1.5)); const ptC = (deg, len, w, cL, cD) => { const a = deg * Math.PI / 180, sn = Math.sin(a), c = -Math.cos(a), tx = sn * len, ty = c * len; for (const [sg, col] of [[1, cL], [-1, cD]]) { x.beginPath(); x.moveTo(0, 0); x.lineTo(-c * w * sg, sn * w * sg); x.lineTo(tx, ty); x.closePath(); x.fillStyle = col; x.fill(); x.strokeStyle = 'rgba(40,25,10,.6)'; x.lineWidth = 0.6; x.stroke(); } };
   x.beginPath(); x.arc(0, 0, 92, 0, 7); x.fillStyle = 'rgba(231,214,172,.85)'; x.fill(); x.strokeStyle = '#5a3a18'; x.lineWidth = 1.5; x.stroke();
   for (let i = 0; i < 16; i++) ptC(11.25 + i * 22.5, 58, 5, '#c0473a', '#7d1f16');
   for (let i = 0; i < 8; i++) ptC(22.5 + i * 45, 70, 7, '#5f8a4a', '#2f5226');
   for (let i = 0; i < 8; i++) ptC(i * 45, 86, 10, i % 2 ? '#e2c27a' : '#2a2018', i % 2 ? '#9c7a3a' : '#0e0a07');
   x.beginPath(); x.arc(0, 0, 8, 0, 7); x.fillStyle = '#c9a86a'; x.fill(); x.stroke(); x.restore();
   // cartela
-  x.save(); x.translate(W - 330, 30); x.fillStyle = 'rgba(236,222,186,.92)'; x.strokeStyle = '#5a3a18'; x.lineWidth = 1.5; x.fillRect(0, 0, 300, 96); x.strokeRect(0, 0, 300, 96); x.strokeRect(5, 5, 290, 86);
+  x.save(); x.translate(W - 330 * Math.min(S, 1.35) - (portrait ? 10 : 0), 30); x.scale(Math.min(S, 1.35), Math.min(S, 1.35)); x.fillStyle = 'rgba(236,222,186,.92)'; x.strokeStyle = '#5a3a18'; x.lineWidth = 1.5; x.fillRect(0, 0, 300, 96); x.strokeRect(0, 0, 300, 96); x.strokeRect(5, 5, 290, 86);
   x.fillStyle = '#3b2410'; x.textAlign = 'center'; x.font = '15px Cinzel, Georgia, serif'; x.fillText('CARTA DE MAREAR', 150, 34); x.font = 'italic 18px "Cormorant Garamond", Georgia, serif'; x.fillText('Primer viaje del Almirante', 150, 58); x.fillText('1492 · 1493', 150, 80); x.restore();
   // derrota: completa en punteado, recorrida en rojo
   const v = voyageNow(), here = routeAt(v.t);
-  x.setLineDash([3, 6]); x.strokeStyle = 'rgba(70,45,20,.6)'; x.lineWidth = 1.6; x.beginPath(); ROUTE.forEach((r, i) => i ? x.lineTo(X(r.lon), Y(r.lat)) : x.moveTo(X(r.lon), Y(r.lat))); x.stroke(); x.setLineDash([]);
+  x.setLineDash([3 * S, 6 * S]); x.strokeStyle = 'rgba(70,45,20,.6)'; x.lineWidth = 1.6 * S; x.beginPath(); ROUTE.forEach((r, i) => i ? x.lineTo(X(r.lon), Y(r.lat)) : x.moveTo(X(r.lon), Y(r.lat))); x.stroke(); x.setLineDash([]);
   if (here.k >= 0) {
-    x.strokeStyle = '#8b1a10'; x.lineWidth = 3; x.lineJoin = 'round'; x.beginPath(); x.moveTo(X(ROUTE[0].lon), Y(ROUTE[0].lat));
+    x.strokeStyle = '#8b1a10'; x.lineWidth = 3 * S; x.lineJoin = 'round'; x.beginPath(); x.moveTo(X(ROUTE[0].lon), Y(ROUTE[0].lat));
     for (let i = 1; i <= here.k; i++) x.lineTo(X(ROUTE[i].lon), Y(ROUTE[i].lat)); x.lineTo(X(here.lon), Y(here.lat)); x.stroke();
     // una marca por día navegado
-    x.fillStyle = '#8b1a10'; for (let t = ROUTE[0].t; t < v.t; t += 864e5) { const p = routeAt(t); x.beginPath(); x.arc(X(p.lon), Y(p.lat), 2.2, 0, 7); x.fill(); }
+    x.fillStyle = '#8b1a10'; for (let t = ROUTE[0].t; t < v.t; t += 864e5) { const p = routeAt(t); x.beginPath(); x.arc(X(p.lon), Y(p.lat), 2.2 * S, 0, 7); x.fill(); }
   }
   // la flota
   const px = X(here.lon), py = Y(here.lat);
-  x.save(); x.translate(px, py);
+  x.save(); x.translate(px, py); x.scale(S, S);
   x.beginPath(); x.arc(0, 0, 22, 0, 7); x.strokeStyle = 'rgba(139,26,16,.8)'; x.lineWidth = 1.5; x.stroke();
   x.fillStyle = '#3b2410'; x.beginPath(); x.moveTo(-13, 2); x.quadraticCurveTo(0, 10, 13, 2); x.lineTo(9, 7); x.lineTo(-9, 7); x.closePath(); x.fill();
   x.fillRect(-0.8, -16, 1.6, 18); x.fillStyle = '#f3ead0'; x.strokeStyle = '#3b2410'; x.lineWidth = 1;
   x.beginPath(); x.moveTo(-8, -13); x.quadraticCurveTo(-4, -6, -8, 0); x.lineTo(8, 0); x.quadraticCurveTo(12, -6, 8, -13); x.closePath(); x.fill(); x.stroke();
   x.fillStyle = '#8b1a10'; x.fillRect(-0.9, -10.5, 1.8, 8); x.fillRect(-3.5, -8, 7, 1.8);
   x.restore();
-  x.fillStyle = '#3b2410'; x.font = 'italic 600 17px "Cormorant Garamond", Georgia, serif'; x.textAlign = px > W - 260 ? 'right' : 'left';
-  x.fillText(`La flota, ${fmtDate(v.y, v.m, v.d)}`, px + (px > W - 260 ? -30 : 30), py - 8);
+  const rgt = px > W - 260 * S, ox = (rgt ? -30 : 30) * S;
+  x.fillStyle = '#3b2410'; x.font = `italic 600 ${17 * S}px "Cormorant Garamond", Georgia, serif`; x.textAlign = rgt ? 'right' : 'left';
+  x.fillText(`La flota, ${fmtDate(v.y, v.m, v.d)}`, px + ox, py - 8 * S);
   const lt = `${Math.abs(here.lat).toFixed(1).replace('.', ',')}° N · ${Math.abs(here.lon).toFixed(1).replace('.', ',')}° O`;
-  x.font = 'italic 15px "Cormorant Garamond", Georgia, serif'; x.fillText(lt, px + (px > W - 260 ? -30 : 30), py + 12);
+  x.font = `italic ${15 * S}px "Cormorant Garamond", Georgia, serif`; x.fillText(lt, px + ox, py + 12 * S);
   let where = '';
   if (v.t < ROUTE[0].t) where = 'La flota aún está en Palos: zarpará el 3 de agosto de 1492.';
   else if (v.t > ROUTE[ROUTE.length - 1].t) where = 'La Niña y la Pinta ya han vuelto a Palos (15 de marzo de 1493).';
@@ -2775,6 +2823,7 @@ function openSheet(id, on) {
   if (show) { if (id === 'mapSheet') drawMap(); else showLog(); }
 }
 $('bMap').addEventListener('click', () => { openSheet('logSheet', false); openSheet('mapSheet'); });
+addEventListener('resize', () => { if (!$('mapSheet').hidden) { clearTimeout(drawMap.t); drawMap.t = setTimeout(drawMap, 200); } });
 $('bLog').addEventListener('click', () => { openSheet('mapSheet', false); openSheet('logSheet'); });
 document.querySelectorAll('.pclose').forEach(b => b.addEventListener('click', () => openSheet(b.dataset.close, false)));
 for (const id of ['mapSheet', 'logSheet']) $(id).addEventListener('click', e => { if (e.target.id === id) openSheet(id, false); });
@@ -2808,7 +2857,7 @@ async function showLog(step) {
 }
 $('logPrev').addEventListener('click', () => showLog(-1)); $('logNext').addEventListener('click', () => showLog(1)); $('logToday').addEventListener('click', () => showLog());
 
-function pickShip(k) { if (ships[k].sunk) { toast(`${CARD[k][1]} está hundida`); return; } HELM.key = k; paintHelm(); setFocus(k); }
+function pickShip(k) { if (ships[k].sunk) { toast(`${CARD[k][1]} está hundida`); return; } setFocus(k); }
 if (innerWidth < 640) { $('bClock').textContent = 'Acelerar'; }
 paintModes(); paintHelm();
 
@@ -3030,7 +3079,7 @@ function randomizeTentacles() {
 }
 const aliveShips = () => Object.keys(ships).filter(k => !ships[k].sunk);
 function startKraken() {
-  if (KR.active || !aliveShips().length) return;
+  if (KR.active || DUTCH.active || !aliveShips().length) return;
   const keys = aliveShips(), key = keys[Math.floor(Math.random() * keys.length)], ship = ships[key];
   const a = Math.PI + (Math.random() - 0.5) * 1.3, dist = 170;
   KR.center = new THREE.Vector3(ship.pos.x + Math.cos(a) * dist, 0, ship.pos.z + Math.sin(a) * dist);
@@ -3064,13 +3113,13 @@ function sinkShip(k, why) {
   s.sunk = true; s.hp = 0; s.sinkSide = Math.random() > 0.5 ? 1 : -1;
   banner(`${CARD[k][1]} se hunde`, (why ? why + ' · ' : '') + (aliveShips().length ? `Quedan ${aliveShips().length} naves a flote` : 'No queda ninguna nave'), 3500);
   splash(s.pos.clone().setY(0.5), 300, 1.6, 5); sfx('emerge', 0.7);
-  if (!aliveShips().length) { if (KR.active) endKraken(false); else if (STORM.active) endStorm(false); }
-  krHud(); stHud();
+  if (!aliveShips().length) { if (KR.active) endKraken(false); else if (STORM.active) endStorm(false); else if (DUTCH.active) endDutch(false); }
+  krHud(); stHud(); if (typeof dhHud === 'function') dhHud();
 }
 /* ---- MODO ATAQUE: tirachinas ----
    Arrastra hacia atrás desde cualquier punto y suelta. La dirección contraria al arrastre y su longitud fijan
    el punto de caída. Las tres naves muestran su parábola y disparan a la vez con física balística real. */
-const ATK = { on: false, aiming: false, p0: null, p1: null, target: new THREE.Vector3(), arcs: [], RANGE: 240, MIN: 18, ELEV: 20 * Math.PI / 180, BLAST: 6, RELOAD: 1.6, queued: false, prevCam: null };
+const ATK = { on: false, aiming: false, p0: null, p1: null, target: new THREE.Vector3(), arcs: [], RANGE: 240, MIN: 8, ELEV: 20 * Math.PI / 180, BLAST: 6, RELOAD: 1.6, queued: false, prevCam: null };
 const arcMat = new THREE.LineDashedMaterial({ color: 0xf1dfae, dashSize: 1.4, gapSize: 0.9, transparent: true, opacity: 0.9, depthTest: false, fog: false });
 const arcDotMat = new THREE.PointsMaterial({ map: GLOW_TEX, color: 0xffe0a0, size: 2.4, sizeAttenuation: true, transparent: true, depthTest: false, depthWrite: false, blending: THREE.AdditiveBlending, fog: false });
 ATK.dots = [];
@@ -3133,7 +3182,7 @@ function hideAim() { ATK.arcs.forEach(l => l.visible = false); ATK.dots.forEach(
 function setAttack(on, fromMode) {
   if (!fromMode) { if (on) { if (MODE === 'zen') setZen(false, true); MODE = 'attack'; } else if (MODE === 'attack') MODE = 'nav'; paintModes(); }
   ATK.on = on; document.body.classList.toggle('attack', on); $('bAttack').setAttribute('aria-pressed', String(on)); $('krAttack').setAttribute('aria-pressed', String(on));
-  controls.enableRotate = !on; controls.enablePan = !on; if (!on) { ATK.aiming = false; ATK.queued = false; hideAim(); }
+  controls.enableRotate = !on; controls.enablePan = !on; controls.enableZoom = !on; if (!on) { ATK.aiming = false; ATK.queued = false; hideAim(); }
   if (on && !KR.active) toast('Modo ataque · arrastra hacia atrás y suelta');
   if (on) attackView(); else if (ATK.prevCam) {
     // volver al encuadre que había antes del ataque (relativo a la flota)
@@ -3141,29 +3190,38 @@ function setAttack(on, fromMode) {
     tween = { p0: camera.position.clone(), t0: controls.target.clone(), p1: fleetCenter.clone().add(pc.p), t1: fleetCenter.clone().add(pc.t), k: 0 };
   }
 }
+// Cámara de batalla: encuadra todas las naves a flote y al enemigo (se recalcula continuamente)
+function computeAttackCam() {
+  const L = ships[HELM.key] || ships.santamaria, fwd = V3(L.fwd.x, 0, L.fwd.y).normalize();
+  // eje de la batalla: de la flota al enemigo (o rumbo adelante); la cámara mira de través
+  const en = enemyPos(), far = en ? en.clone().setY(0) : fleetCenter.clone().addScaledVector(fwd, 120);
+  const axis = far.clone().sub(fleetCenter).setY(0); const span = Math.max(90, axis.length()); axis.normalize();
+  const side = V3(-axis.z, 0, axis.x); if (side.dot(V3(-fwd.z, 0, fwd.x)) < 0) side.negate();
+  const dir = side.clone().multiplyScalar(0.14).addScaledVector(axis, -0.99).normalize();
+  // encaje: todas las naves dentro del cuadro y centradas; el enemigo por debajo del marcador
+  const tc = camera.clone(); tc.fov = camera.fov; tc.aspect = camera.aspect; tc.updateProjectionMatrix();
+  const pts = Object.values(ships).filter(s => !s.sunk).map(s => s.pos.clone().setY(2)); if (!pts.length) pts.push(fleetCenter.clone());
+  if (en) { const rr = KR.active ? 24 : DUTCH.active ? 16 : 0; for (let k = 0; k < 4; k++) pts.push(far.clone().add(V3(Math.cos(k * 1.571) * rr, 3, Math.sin(k * 1.571) * rr))); }
+  const c = fleetCenter.clone().lerp(far, 0.45); c.y = 0; let R = 100 + span * 0.7, p = V3();
+  for (let it = 0; it < 60; it++) {
+    p.copy(c).addScaledVector(dir, R * 0.75).add(V3(0, R * 1.3, 0));   // unos 60° de picado
+    tc.position.copy(p); tc.lookAt(c); tc.updateMatrixWorld();
+    const fa = far.clone().project(tc); let lo = 1, hi = -1, xm = 0;
+    for (const q of pts) { const v = q.clone().project(tc); lo = Math.min(lo, v.y); hi = Math.max(hi, v.y); xm = Math.max(xm, Math.abs(v.x)); }
+    const top = Math.max(fa.y, hi), bot = lo, T = 0.38, Bt = -0.55;
+    if (top > T || bot < Bt || xm > 0.8 || Math.abs(fa.x) > 0.8) R *= 1.05; else if (top < T - 0.08 && bot > Bt + 0.08 && xm < 0.7) R *= 0.96;
+    c.addScaledVector(axis, ((top + bot) / 2 - (T + Bt) / 2) * R * 0.25);
+  }
+  return { p, c: c.setY(0) };
+}
 // Vista aérea casi isométrica: alta, de tres cuartos por la aleta, abarcando flota y kraken
 function attackView() {
   if (!ATK.prevCam) ATK.prevCam = { p: camera.position.clone().sub(fleetCenter), t: controls.target.clone().sub(fleetCenter), fov: P.cam.fov, maxD: controls.maxDistance };
   if (focusKey) { focusKey = null; document.querySelectorAll('#ships .scroll').forEach(b => b.setAttribute('aria-pressed', 'false')); showCard(null); controls.minDistance = 2; }
-  const L = ships[HELM.key] || ships.santamaria, fwd = V3(L.fwd.x, 0, L.fwd.y).normalize();
-  // eje de la batalla: de la flota al kraken (o rumbo adelante); la cámara mira de través, con la flota abajo
-  const far = KR.active ? KR.center.clone().setY(0) : fleetCenter.clone().addScaledVector(fwd, 120);
-  const axis = far.clone().sub(fleetCenter).setY(0); const span = Math.max(90, axis.length()); axis.normalize();
-  const side = V3(-axis.z, 0, axis.x); if (side.dot(V3(-fwd.z, 0, fwd.x)) < 0) side.negate();
   P.cam.fov = 40; applyCamera();
-  const dir = side.clone().multiplyScalar(0.14).addScaledVector(axis, -0.99).normalize();
-  // encaje: ajusta distancia y centro hasta que el kraken quede por debajo del marcador y la flota por encima del borde
-  const tc = camera.clone(); tc.fov = camera.fov; tc.aspect = camera.aspect; tc.updateProjectionMatrix();
-  const c = fleetCenter.clone().lerp(far, 0.5); c.y = 0; let R = 100 + span * 0.7, p = V3();
-  for (let it = 0; it < 40; it++) {
-    p.copy(c).addScaledVector(dir, R * 0.75).add(V3(0, R * 1.3, 0));   // unos 60° de picado
-    tc.position.copy(p); tc.lookAt(c); tc.updateMatrixWorld();
-    const a = far.clone().project(tc).y, b = fleetCenter.clone().project(tc).y, top = 0.28, bot = -0.62;
-    if (a > top || b < bot) R *= 1.06; else if (a < top - 0.2 && b > bot + 0.2) R *= 0.96;
-    c.addScaledVector(axis, ((a + b) / 2 - (top + bot) / 2) * R * 0.25);
-  }
+  const { p, c } = computeAttackCam();
   controls.maxDistance = 520;
-  tween = { p0: camera.position.clone(), t0: controls.target.clone(), p1: p, t1: c.setY(0), k: 0 };
+  tween = { p0: camera.position.clone(), t0: controls.target.clone(), p1: p, t1: c, k: 0 };
 }
 function volley() {
   const now = performance.now();
@@ -3197,9 +3255,9 @@ aimSurface.addEventListener('pointermove', e => { if (!ATK.aiming) return; ATK.p
 aimSurface.addEventListener('pointerup', e => {
   if (!ATK.aiming) return; ATK.aiming = false; ATK.p1 = { x: e.clientX, y: e.clientY };
   const info = aimPoint(); hideAim();
-  if (info.len > 24) volley(); else toast('Arrastra más lejos para tensar el tirachinas');
+  if (info.len > 3) volley();
 });
-aimSurface.addEventListener('pointercancel', () => { if (ATK.aiming && ATK.p1 && Math.hypot(ATK.p0.x - ATK.p1.x, ATK.p0.y - ATK.p1.y) > 24) { aimPoint(); volley(); } ATK.aiming = false; hideAim(); });
+aimSurface.addEventListener('pointercancel', () => { if (ATK.aiming && ATK.p1 && Math.hypot(ATK.p0.x - ATK.p1.x, ATK.p0.y - ATK.p1.y) > 3) { aimPoint(); volley(); } ATK.aiming = false; hideAim(); });
 function updateBalls(dt) {
   for (let i = KR.balls.length - 1; i >= 0; i--) {
     const B = KR.balls[i]; B.t += dt;
@@ -3210,7 +3268,10 @@ function updateBalls(dt) {
       if (KR.headE > 0.5) for (let k = 0; k <= 6 && !head; k++) { const t = k / 6, c = KR.headPos.clone().addScaledVector(KR.headAxis, t * HEAD_H * HEAD_S * 0.9), r = (3.6 * (1 - t * 0.75) + 0.4) * HEAD_S; if (c.distanceToSquared(B.p) < r * r) head = true; }
       if (!head) for (const tn of KR.tents) { if (tn.e < 0.5 || !tn.wc) continue; for (const c of tn.wc) { const dx = c[0] - B.p.x, dy = c[1] - B.p.y, dz = c[2] - B.p.z; if (dx * dx + dy * dy + dz * dz < (c[3] + 0.5) ** 2) { hit = tn; break; } } if (hit) break; }
     }
+    let dHit = false;
+    if (DUTCH.active && DUTCH.phase !== 'sink') { const l = DUTCH.ship.root.worldToLocal(B.p.clone()); if (Math.abs(l.x) < DSPEC.L * 0.55 && Math.abs(l.z) < DSPEC.B * 0.5 + 0.6 && l.y > -1.5 && l.y < 16) dHit = true; }
     const wy = waveHeight(B.p.x, B.p.z, waveT);
+    if (dHit) { scene.remove(B.ball); KR.balls.splice(i, 1); hurtDutch(4, B.p.clone(), '¡Impacto en el Holandés!'); continue; }
     if (head || hit || B.p.y <= wy || B.t > 12) {
       scene.remove(B.ball); KR.balls.splice(i, 1);
       if (head) hurtKraken(5, B.p.clone(), null, '¡Impacto en la cabeza!');
@@ -3219,25 +3280,12 @@ function updateBalls(dt) {
         const p = B.p.clone(); p.y = wy; splash(p, 110, 1.1, 0.8); sfx('hit', 0.35);
         // impacto cercano: la onda hiere a los tentáculos cuya base está dentro de la zona
         if (KR.active && KR.headE > 0.3 && Math.hypot(KR.center.x - p.x, KR.center.z - p.z) < ATK.BLAST + 4) hurtKraken(1, p.clone().setY(p.y + 1));
+        if (DUTCH.active && Math.hypot(DUTCH.pos.x - p.x, DUTCH.pos.z - p.z) < DSPEC.L * 0.5 + ATK.BLAST) hurtDutch(1, p.clone().setY(p.y + 1));
       }
     }
   }
 }
 function updateKraken(dt) {
-  // cada hora en punto (hora real de España)
-  // cada hora en punto según el reloj de la escena (hora real de España o el día acelerado)
-  {
-    const parts = HOURFMT.formatToParts(new Date(nowMs()));
-    const get = t => parts.find(p => p.type === t).value, key = `${get('year')}${get('month')}${get('day')}${get('hour')}`;
-    const first = KR.lastHourKey === '';
-    if (key !== KR.lastHourKey) {
-      const crossed = !first || get('minute') === '00';   // al abrir la página solo cuenta si estamos en el minuto 00
-      KR.lastHourKey = key;
-      if (crossed && INTRO.entered && !KR.active && !STORM.active) startKraken();
-      else if (crossed) KR.pendingHour = true;
-    }
-    if (KR.pendingHour && INTRO.entered && !KR.active && !STORM.active) { KR.pendingHour = false; startKraken(); }
-  }
   if (!KR.active) return;
   const time = performance.now() / 1000; KR.t += dt;
   if (ships[KR.target].sunk && KR.phase !== 'end' && KR.phase !== 'dive') { KR.phase = 'dive'; KR.diveT = 0; KR.eTarget = 0; }
@@ -3302,6 +3350,7 @@ function updateKraken(dt) {
 }
 $('krSummon').addEventListener('click', () => { toggleNotes(false); startKraken(); });
 $('stSummon').addEventListener('click', () => { toggleNotes(false); startStorm(); });
+$('dhSummon').addEventListener('click', () => { toggleNotes(false); startDutch(); });
 $('bAttack').addEventListener('click', () => setAttack(!ATK.on)); $('krAttack').addEventListener('click', () => setAttack(!ATK.on));
 
 /* =====================================================================
@@ -3416,7 +3465,7 @@ function avoidWhirls(s) {
   return a;
 }
 function startStorm() {
-  if (STORM.active || KR.active || !INTRO.entered) return;
+  if (STORM.active || KR.active || DUTCH.active || !INTRO.entered) return;
   Object.assign(STORM, { active: true, ending: false, t: 0, nextBolt: 6, result: '' });
   for (const s of Object.values(ships)) { if (s.sunk) { s.sunk = false; s.sinkT = 0; } s.hp = 100; s.whirlSink = null; }
   STORM.whirls = Array.from({ length: 4 }, () => ({})); STORM.whirls.forEach((w, i) => placeWhirl(w, i, true));
@@ -3441,13 +3490,6 @@ function stHud() {
   $('stInfo').textContent = STORM.ending ? 'Amaina' : near < 1e8 ? `Remolino a ${Math.max(0, Math.round(near))} m` : '';
 }
 function updateStorm(dt, rdt) {
-  // disparo a cada y media según el reloj de la escena
-  {
-    const parts = HOURFMT.formatToParts(new Date(nowMs())), get = t => parts.find(p => p.type === t).value, mm = +get('minute');
-    const key = `${get('year')}${get('month')}${get('day')}${get('hour')}${mm >= 30 ? 'b' : 'a'}`, first = STORM.lastKey === '';
-    if (key !== STORM.lastKey) { const crossed = key.endsWith('b') && (!first || mm === 30); STORM.lastKey = key; if (crossed) STORM.pending = true; }
-    if (STORM.pending && INTRO.entered && !KR.active && !STORM.active) { STORM.pending = false; startStorm(); }
-  }
   const target = STORM.active && !STORM.ending ? 1 : 0, prevK = STORM.k;
   STORM.k += clamp(target - STORM.k, -rdt / 10, rdt / 12);
   if (STORM.active) {
@@ -3489,6 +3531,189 @@ function updateStorm(dt, rdt) {
   if (AUDIO.on && STORM.active) rainAudio.volume = clamp(0.6 * VOL.master * STORM.k, 0, 1);
 }
 
+// cada ~1,5 s: si va lento se baja la resolución interna; si sobra margen, se sube
+function adaptQuality() {
+  const now = performance.now(), d = DYN.last ? now - DYN.last : 16; DYN.last = now;
+  if (document.hidden || d > 1500) return;
+  DYN.acc += d; DYN.n++;
+  if (DYN.acc < 1500 || DYN.n < 8) return;
+  const avg = DYN.acc / DYN.n; DYN.acc = 0; DYN.n = 0;
+  if (DYN.cool > 0) { DYN.cool--; return; }
+  let pr = DYN.pr;
+  if (avg > 26) pr = Math.max(DYN.min, pr - (avg > 40 ? 0.25 : 0.12));
+  else if (avg < 15 && pr < DYN.max) pr = Math.min(DYN.max, pr + 0.1);
+  if (Math.abs(pr - DYN.pr) > 0.01) { DYN.pr = pr; resize(); DYN.cool = 1; }
+}
+/* =====================================================================
+   EL HOLANDÉS ERRANTE — a y cuarto: emerge del agua, rodea la flota y la cañonea
+   (buque fantasma de la leyenda, del s. XVII: anacrónico a propósito)
+   ===================================================================== */
+const DSPEC = (() => {
+  const s = JSON.parse(JSON.stringify(SPECS.santamaria)), k = 1.35;
+  Object.assign(s, { name: 'Holandés Errante', L: 27, B: 8.2, draft: 2.9, free: 2.5, sheerA: 2.8, sheerF: 1.5, bulwark: 1.1, flags: {}, boat: false,
+    castles: [{ s0: 0, s1: 0.32, lift: 2.2 }, { s0: 0, s1: 0.16, lift: 1.9, onTop: 0 }, { s0: 0.8, s1: 0.99, lift: 1.9, tip: 1.8 }] });
+  for (const m of s.masts) { m.h *= k; m.r *= 1.25; if (m.cofa) m.cofa *= k; for (const sl of m.sails) { sl.y *= k; if (sl.W) { sl.W *= k; sl.H *= k; } if (sl.Ly) { sl.Ly *= k; sl.clewY *= k; } } }
+  const fore = s.masts.find(m => m.id === 'fore'); fore.sails.push({ t: 'sq', y: fore.h - 0.9, W: fore.sails[0].W * 0.62, H: 4.2 });
+  s.bowsprit.len = 10; s.bowsprit.sprit.W *= k; s.bowsprit.sprit.H *= k;
+  return s;
+})();
+// vela rota: agujeros y bordes deshilachados (máscara alfa en metros de lona)
+const TORN_TEX = (() => {
+  const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d');
+  x.fillStyle = '#fff'; x.fillRect(0, 0, 256, 256); x.fillStyle = '#000';
+  for (let i = 0; i < 26; i++) { const px = Math.random() * 256, py = Math.random() * 256, r = 4 + Math.random() * 18; x.beginPath(); for (let a = 0; a < 7; a += 0.5) { const rr = r * (0.55 + Math.random() * 0.7); x.lineTo(px + Math.cos(a) * rr, py + Math.sin(a) * rr * 1.6); } x.fill(); }
+  for (let i = 0; i < 400; i++) x.fillRect(Math.random() * 256, Math.random() * 256, 1 + Math.random() * 2, 3 + Math.random() * 7);
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(1 / 5, 1 / 5); return t;
+})();
+const GHOST_MAT = {
+  sail: new THREE.MeshStandardMaterial({ color: '#2c332e', roughness: 1, side: THREE.DoubleSide, alphaMap: TORN_TEX, alphaTest: 0.5, emissive: new THREE.Color('#0d1a13'), emissiveIntensity: 1 }),
+  wood: new THREE.MeshStandardMaterial({ color: '#44463d', roughness: 0.95, map: woodAlbedo, bumpMap: woodBump, bumpScale: 1.2 }),
+  dark: new THREE.MeshStandardMaterial({ color: '#23251f', roughness: 0.9 }),
+  lamp: new THREE.MeshStandardMaterial({ color: '#0d1a14', emissive: new THREE.Color('#72ffb4'), emissiveIntensity: 2.6 })
+};
+const DUTCH = { active: false, phase: 'idle', t: 0, hp: 100, pos: new THREE.Vector3(), hd: 0, ang: 0, dir: 1, R: 125, balls: [], reload: 5, lastKey: '', pending: false, y: -34, dur: 180, endT: 0, flash: 0 };
+{
+  const sh = { key: 'holandes', spec: DSPEC, F: hullFns(DSPEC), root: new THREE.Group(), pos: DUTCH.pos, fwd: new THREE.Vector2() };
+  sh.root.rotation.order = 'YZX';
+  sh.hull = buildHull(sh); sh.root.add(sh.hull); sh.rig = buildRig(sh); sh.root.add(sh.rig);
+  for (const lg of sh.lanterns) { const i = LANTERNS.indexOf(lg); if (i >= 0) LANTERNS.splice(i, 1); }
+  if (sh.lampLight) sh.lampLight.parent.remove(sh.lampLight);
+  const gGlow = new THREE.SpriteMaterial({ map: GLOW_TEX, color: 0x5dffa8, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false, opacity: 0.8 });
+  sh.root.traverse(o => {
+    if (o.isSprite) { o.material = gGlow; return; }
+    if (!o.isMesh || !o.material) return;
+    const m = o.material;
+    o.material = m === sailMat ? GHOST_MAT.sail : m === lanternMat ? GHOST_MAT.lamp : m.map ? GHOST_MAT.wood : GHOST_MAT.dark;
+    if (o.material === GHOST_MAT.sail) o.customDepthMaterial = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, alphaMap: TORN_TEX, alphaTest: 0.5 });
+  });
+  sh.root.visible = false; scene.add(sh.root); DUTCH.ship = sh;
+}
+const dutchMusic = new Audio('audio/holandes.mp3'); dutchMusic.loop = true; dutchMusic.volume = 0; dutchMusic.preload = 'auto';
+const dBallGlow = new THREE.SpriteMaterial({ map: GLOW_TEX, color: 0x8dffc0, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false, opacity: 0.85 });
+const enemyPos = () => KR.active ? KR.center : DUTCH.active && DUTCH.phase !== 'sink' ? DUTCH.pos : null;
+
+function startDutch() {
+  if (DUTCH.active || KR.active || STORM.active || !INTRO.entered || !aliveShips().length) return;
+  for (const s of Object.values(ships)) { if (s.sunk) { s.sunk = false; s.sinkT = 0; } s.hp = 100; }
+  const L = ships[HELM.key], f = V3(Math.cos(L.hd), 0, -Math.sin(L.hd));
+  Object.assign(DUTCH, { active: true, phase: 'rise', t: 0, hp: 100, R: 125, dir: Math.random() > 0.5 ? 1 : -1, reload: 9, y: -34, endT: 0 });
+  DUTCH.ang = Math.atan2(f.z, f.x) + (Math.random() - 0.5) * 1.2;   // emerge por delante de la flota
+  DUTCH.pos.set(fleetCenter.x + Math.cos(DUTCH.ang) * DUTCH.R, 0, fleetCenter.z + Math.sin(DUTCH.ang) * DUTCH.R);
+  DUTCH.ship.root.visible = true;
+  document.body.classList.add('dutch'); $('dhHud').hidden = false; dhHud();
+  banner('¡El Holandés Errante!', 'Emerge de las profundidades · arrastra hacia atrás y suelta para disparar', 5000);
+  splash(DUTCH.pos.clone().setY(0.5), 380, 1.8, 7); sfx('emerge', 0.7, 0.7);
+  if (AUDIO.on) { fadeTo(AUDIO.music, 0, 2000); dutchMusic.currentTime = 0; dutchMusic.volume = 0; dutchMusic.play().then(() => fadeTo(dutchMusic, 0.8 * VOL.master, 4000)).catch(() => {}); }
+  setAttack(true);
+}
+function endDutch(win, vanish) {
+  if (!DUTCH.active || DUTCH.phase === 'sink') return;
+  DUTCH.phase = 'sink'; DUTCH.endT = 0;
+  const alive = aliveShips().length;
+  if (win) banner('¡Victoria!', `El Holandés Errante se hunde · ${alive} de 3 naves a flote`, 6000);
+  else if (vanish) banner('El Holandés se desvanece', 'Se hunde en la niebla… hasta la próxima vez', 5000);
+  else banner('La flota ha caído', 'El Holandés se lleva las tres naves al fondo… la expedición se rehará', 6000);
+  if (win) splash(DUTCH.pos.clone().setY(0.5), 420, 2, 8);
+  if (AUDIO.on) { fadeTo(dutchMusic, 0, 4000); setTimeout(() => { if (AUDIO.on && !KR.active && !STORM.active) AUDIO.music.play().then(() => fadeTo(AUDIO.music, musicLevel(), 3500)).catch(() => {}); }, 3500); }
+  setTimeout(() => { if (!KR.active) setAttack(false); }, 6500);
+}
+function hurtDutch(n, at, label) {
+  if (!DUTCH.active || DUTCH.phase === 'sink' || DUTCH.phase === 'rise' && DUTCH.t < 5) return;
+  DUTCH.hp -= n; DUTCH.flash = 1; splash(at, 70, 0.9, 0.8); sfx('hit', 0.8);
+  if (label) toast(label);
+  if (DUTCH.hp <= 0) endDutch(true);
+  dhHud();
+}
+function dhHud() {
+  if ($('dhHud').hidden) return;
+  $('dhHp').style.width = Math.max(0, DUTCH.hp) + '%'; $('dhHpN').textContent = Math.max(0, Math.ceil(DUTCH.hp));
+  for (const [k, s] of Object.entries(ships)) { const el = $('dh_' + k); if (!el) continue; el.querySelector('i').style.width = Math.max(0, s.hp) + '%'; el.classList.toggle('sunk', !!s.sunk); }
+  const t = Math.floor(DUTCH.t); $('dhTime').textContent = `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`;
+  $('dhDist').textContent = DUTCH.phase === 'rise' ? 'Emerge…' : DUTCH.phase === 'sink' ? 'Se hunde' : `A ${Math.round(DUTCH.pos.distanceTo(fleetCenter))} m`;
+}
+// andanada del Holandés: 4 cañones del costado que mira a la nave elegida, con puntería adelantada
+function dutchFire() {
+  const al = aliveShips(); if (!al.length) return;
+  const key = al[Math.floor(Math.random() * al.length)], s = ships[key], sh = DUTCH.ship, F = sh.F;
+  const lp = sh.root.worldToLocal(s.pos.clone().setY(1)), side = lp.z >= 0 ? 1 : -1;
+  [0.3, 0.42, 0.54, 0.66].forEach((ss, g) => setTimeout(() => {
+    if (!DUTCH.active || DUTCH.phase === 'sink' || s.sunk) return;
+    sh.root.updateMatrixWorld();
+    const m = sh.root.localToWorld(V3(F.P(ss, 0.95)[0], F.deckY(ss) + 0.7, side * (F.deckW(ss) + 0.5)));
+    const vel = V3(Math.cos(s.hd), 0, -Math.sin(s.hd)).multiplyScalar(s.v);
+    let tgt = s.pos.clone().setY(0).add(V3((Math.random() - 0.5) * 12, 0, (Math.random() - 0.5) * 12));
+    const T0 = ballistic(m, tgt).T; tgt.addScaledVector(vel, T0 * 0.85);
+    const { v, T } = ballistic(m, tgt);
+    muzzle(m, v.clone().setY(0).normalize()); sfx('cannon', 0.5, 0.7 + Math.random() * 0.1); KR.shake = Math.max(KR.shake, 0.08);
+    const ball = new THREE.Mesh(BALL_GEO, ironMat); ball.position.copy(m); const gl = new THREE.Sprite(dBallGlow); gl.scale.setScalar(3.4); ball.add(gl); scene.add(ball);
+    DUTCH.balls.push({ ball, p: m.clone(), v, t: 0, last: m.clone() });
+  }, g * 220 + Math.random() * 90));
+}
+function updateDutch(dt, rdt) {
+  // niebla verdosa de la aparición
+  const fk0 = GHOST.fk; GHOST.fk += clamp((DUTCH.active && DUTCH.phase !== 'sink' ? 1 : 0) - GHOST.fk, -rdt / 8, rdt / 6);
+  if (Math.abs(GHOST.fk - fk0) > 1e-5) updateDayCycle();
+  // balas enemigas (se simulan aunque el Holandés ya se esté hundiendo)
+  for (let i = DUTCH.balls.length - 1; i >= 0; i--) {
+    const B = DUTCH.balls[i]; B.t += dt;
+    B.p.x += B.v.x * dt; B.p.z += B.v.z * dt; B.v.y -= 9.8 * dt; B.p.y += B.v.y * dt; B.ball.position.copy(B.p);
+    { const n = Math.max(1, Math.ceil(B.last.distanceTo(B.p) / 0.5)); for (let q = 1; q <= n; q++) trailPuff(B.last.clone().lerp(B.p, q / n), 1.0); B.last.copy(B.p); }
+    const wy = waveHeight(B.p.x, B.p.z, waveT);
+    let hitKey = null;
+    for (const [k, s] of Object.entries(ships)) { if (s.sunk) continue; const l = s.root.worldToLocal(B.p.clone()); if (Math.abs(l.x) < s.spec.L * 0.5 && Math.abs(l.z) < s.spec.B * 0.5 + 0.4 && l.y > -1 && l.y < 6) { hitKey = k; break; } }
+    if (hitKey || B.p.y <= wy || B.t > 14) {
+      scene.remove(B.ball); DUTCH.balls.splice(i, 1);
+      if (hitKey) {
+        const s = ships[hitKey]; s.hp -= 14; splash(B.p.clone(), 90, 1.0, 1.2); sfx('hit', 0.9); KR.shake = Math.max(KR.shake, 0.2);
+        toast(`¡Impacto en ${CARD[hitKey][1]}!`);
+        if (s.hp <= 0) sinkShip(hitKey, 'Cañoneada por el Holandés'); dhHud();
+      } else { const p = B.p.clone(); p.y = wy; splash(p, 110, 1.1, 0.8); sfx('hit', 0.3); }
+    }
+  }
+  const sh = DUTCH.ship;
+  if (!DUTCH.active) { if (!KR.active) waterU.uKr.value[8].w = 0; return; }
+  DUTCH.t += dt; DUTCH.flash = Math.max(0, DUTCH.flash - rdt * 3);
+  GHOST_MAT.lamp.emissiveIntensity = 2.6 + Math.sin(simT * 7) * 0.4 + DUTCH.flash * 3;
+  // rodea a la flota a unos 110–130 m, de costado
+  const w = 5.5 / DUTCH.R;
+  if (DUTCH.phase !== 'sink') { DUTCH.ang += DUTCH.dir * w * dt; DUTCH.R = 120 + Math.sin(DUTCH.t * 0.11) * 12; }
+  const cx = fleetCenter.x + Math.cos(DUTCH.ang) * DUTCH.R, cz = fleetCenter.z + Math.sin(DUTCH.ang) * DUTCH.R;
+  DUTCH.pos.x += (cx - DUTCH.pos.x) * Math.min(1, dt * 0.8); DUTCH.pos.z += (cz - DUTCH.pos.z) * Math.min(1, dt * 0.8);
+  const tx = -Math.sin(DUTCH.ang) * DUTCH.dir, tz = Math.cos(DUTCH.ang) * DUTCH.dir, hd = Math.atan2(-tz, tx);
+  DUTCH.hd += wrapA(hd - DUTCH.hd) * Math.min(1, dt * 1.5);
+  let yOff = 0, tilt = 0;
+  if (DUTCH.phase === 'rise') { const k = smooth(0, 9, DUTCH.t); yOff = -34 * Math.pow(1 - k, 1.6); tilt = 0.35 * (1 - k); if (DUTCH.t > 9) DUTCH.phase = 'circle'; if (Math.random() < dt * 8) splash(DUTCH.pos.clone().setY(0.5), 60, 1.4, 5); }
+  else if (DUTCH.phase === 'circle') {
+    DUTCH.reload -= dt; if (DUTCH.reload <= 0) { dutchFire(); DUTCH.reload = 5 + Math.random() * 3; }
+    if (DUTCH.t > DUTCH.dur) endDutch(false, true);
+  } else if (DUTCH.phase === 'sink') {
+    DUTCH.endT += dt; const k = smooth(0, 8, DUTCH.endT); yOff = -36 * k * k; tilt = 0.5 * k;
+    if (DUTCH.endT > 8.5 && !DUTCH.balls.length) {
+      DUTCH.active = false; DUTCH.phase = 'idle'; sh.root.visible = false; document.body.classList.remove('dutch'); $('dhHud').hidden = true;
+      if (Object.values(ships).some(s => s.sunk)) { KR.refloat = true; toast('La expedición se rehace…'); }
+    }
+  }
+  const heave = waveHeight(DUTCH.pos.x, DUTCH.pos.z, waveT) * 0.8;
+  sh.root.position.set(DUTCH.pos.x, heave - 0.2 + yOff, DUTCH.pos.z);
+  sh.root.rotation.set(Math.sin(simT * 0.5) * 0.05 + tilt * 0.6, DUTCH.hd, Math.sin(simT * 0.37 + 1) * 0.03 - tilt);
+  if (!KR.active) waterU.uKr.value[8].set(DUTCH.pos.x, DUTCH.pos.z, 12, DUTCH.phase === 'rise' ? 1 : DUTCH.phase === 'sink' ? 0.8 * (1 - smooth(4, 8, DUTCH.endT)) : 0.3);
+  if (frames % 15 === 0) dhHud();
+}
+
+// ---- Calendario de enemigos (reloj de la escena): kraken en punto, tormenta y veinte, Holandés menos veinte.
+// Solo aparecen si se está dentro de los 5 primeros minutos (p. ej. a las 13:02 sí sale el kraken; a las 13:05 ya no).
+const SCHED = { list: [{ n: 'kraken', m: 0 }, { n: 'storm', m: 20 }, { n: 'dutch', m: 40 }], fired: {}, WIN: 5 };
+function schedule() {
+  if (!INTRO.entered || KR.active || STORM.active || DUTCH.active) return;
+  const parts = HOURFMT.formatToParts(new Date(nowMs())), get = t => parts.find(p => p.type === t).value, mm = +get('minute');
+  const hk = `${get('year')}${get('month')}${get('day')}${get('hour')}`;
+  for (const ev of SCHED.list) {
+    if (mm < ev.m || mm >= ev.m + SCHED.WIN || SCHED.fired[ev.n] === hk) continue;
+    SCHED.fired[ev.n] = hk;
+    if (ev.n === 'kraken') startKraken(); else if (ev.n === 'storm') startStorm(); else startDutch();
+    return;
+  }
+}
 const _shake = new THREE.Vector3();
 function frame() {
   const dt = Math.min(clock.getDelta(), 0.05);
@@ -3508,7 +3733,7 @@ function frame() {
   if (KR.refloat && !KR.active) { KR.refloat = false; for (const sh of Object.values(ships)) { if (sh.sunk) { sh.sunk = false; sh.hp = 100; } } }
   { const fk = ATK.on ? 0.3 : 1; if (Math.abs(fk - FOG.k) > 0.002) { FOG.k += (fk - FOG.k) * Math.min(1, dt * 2); scene.fog.density = FOG.base * FOG.k; waterU.uFogDen.value = scene.fog.density; } }
   if (ATK.queued && performance.now() >= KR.reload) { ATK.target.copy(ATK.queued); volley(); }
-  updateStorm(P.motion.paused ? 0 : dt, dt);
+  schedule(); updateStorm(P.motion.paused ? 0 : dt, dt); updateDutch(P.motion.paused ? 0 : dt, dt);
   updateKraken(dt); updateBalls(dt); updateTrails(dt); if (frames % 6 === 0) paintHelm(); if (MODE === 'nav') updateCompass(); if (ATK.aiming) drawAim(); updateFX(dt); updateSmoke(dt);
   sprayMat.uniforms.uCol.value.set(P.light.color).multiplyScalar(P.light.intensity * 0.22).add(new THREE.Color(P.light.ambientColor).multiplyScalar(P.light.ambient * 0.5)); sprayMat.uniforms.uScale.value = finalMat.uniforms.uRes.value.y * 0.5;
   const delta = fleetAnchor.clone().sub(lastAnchor); lastAnchor.copy(fleetAnchor);
@@ -3519,6 +3744,10 @@ function frame() {
     tween.k = Math.min(1, (performance.now() - tween.t) / 1600); const e = tween.k < 0.5 ? 4 * tween.k ** 3 : 1 - Math.pow(-2 * tween.k + 2, 3) / 2;
     camera.position.lerpVectors(tween.p0, tween.p1, e); controls.target.lerpVectors(tween.t0, tween.t1, e); if (tween.k >= 1) tween = null;
   }
+  if (ATK.on && !tween && !ATK.aiming) {
+    if (!ATK.frameT || frames % 8 === 0) ATK.frameT = computeAttackCam();
+    const kk = 1 - Math.exp(-dt * 1.3); camera.position.lerp(ATK.frameT.p, kk); controls.target.lerp(ATK.frameT.c, kk);
+  } else if (!ATK.on) ATK.frameT = null;
   controls.update();
   const wy = waveHeight(camera.position.x, camera.position.z, waveT) + 2.0; if (camera.position.y < wy) camera.position.y = wy;
   waterU.uOff.value.set(Math.round((camera.position.x + 40) / 24) * 24, Math.round(camera.position.z / 24) * 24);
@@ -3526,8 +3755,9 @@ function frame() {
   sun.target.position.copy(fleetCenter); sun.position.copy(fleetCenter).addScaledVector(SUN.dir, 320);
   _shake.set((Math.random() - 0.5), (Math.random() - 0.5), (Math.random() - 0.5)).multiplyScalar(KR.shake * 0.9); camera.position.add(_shake);
   camera.updateMatrixWorld(); SUN.dirView.copy(SUN.dir).transformDirection(camera.matrixWorldInverse);
-  renderer.shadowMap.needsUpdate = true;
-  if (Q.refl) { renderReflection(); }
+  renderer.shadowMap.needsUpdate = (frames & 1) === 0;
+  if (Q.refl && (frames & 1) === 1) { renderReflection(); }
+  adaptQuality();
   renderer.setRenderTarget(rtScene); renderer.render(scene, camera);
   if (Q.bloom > 0) bloom.render(renderer, null, rtScene, dt, false);
   renderer.setRenderTarget(null); fsQuad.render(renderer);
@@ -3537,7 +3767,7 @@ function frame() {
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
-window.__lab = { strike, getBolt: () => bolt, STORM, startStorm, endStorm, updateShips, openSheet, voyageNow, routeAt, HELM, setMode, pickShip, placeCam: (p, t) => { tween = null; camera.position.copy(p); controls.target.copy(t); controls.update(); }, P, KR, ATK, hurtKraken, sinkShip, updateBalls, updateKraken, startKraken, setAttack, volley, aimPoint, drawAim, CLOCK, updateDayCycle, setFocus, goView, applyAll, setZen, VIEWS, ships, rebuildRigs };
+window.__lab = { DUTCH, startDutch, endDutch, hurtDutch, DYN, renderer, strike, getBolt: () => bolt, STORM, startStorm, endStorm, updateShips, openSheet, voyageNow, routeAt, HELM, setMode, pickShip, placeCam: (p, t) => { tween = null; camera.position.copy(p); controls.target.copy(t); controls.update(); }, P, KR, ATK, hurtKraken, sinkShip, updateBalls, updateKraken, startKraken, setAttack, volley, aimPoint, drawAim, CLOCK, updateDayCycle, setFocus, goView, applyAll, setZen, VIEWS, ships, rebuildRigs };
 
 </script>
 </body>
